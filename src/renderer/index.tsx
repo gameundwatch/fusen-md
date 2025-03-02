@@ -1,10 +1,13 @@
 import { createRoot } from 'react-dom/client';
+import { HashRouter } from 'react-router-dom';
 import App from './App';
 
 const container = document.getElementById('root') as HTMLElement;
-const root = createRoot(container);
-root.render(<App />);
-
+createRoot(document.getElementById('root')!).render(
+  <HashRouter>
+    <App />
+  </HashRouter>,
+);
 // calling IPC exposed from preload script
 window.electron.ipcRenderer.once('ipc-example', (arg) => {
   // eslint-disable-next-line no-console
