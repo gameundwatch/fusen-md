@@ -28,11 +28,13 @@ function createMainWindow() {
     },
     autoHideMenuBar: true,
     titleBarStyle: 'hidden',
-    titleBarOverlay: true,
+    titleBarOverlay: {
+      height: 32,
+    },
   });
   // 開発中はローカルサーバ or ビルド後ファイルを読み込む
   mainWindow.loadURL(`${resolveHtmlPath('index.html')}#/`);
-
+  mainWindow.webContents.openDevTools()
   mainWindow.on('closed', () => {
     mainWindow = null;
   });
@@ -56,7 +58,9 @@ function createNoteWindow(noteId: string) {
     alwaysOnTop: true,
     autoHideMenuBar: true,
     titleBarStyle: 'hidden',
-    titleBarOverlay: true,
+    titleBarOverlay: {
+      color: 'orange'
+    },
   });
 
   child.loadURL(`${resolveHtmlPath('index.html')}#/note?noteId=${noteId}`);

@@ -72,7 +72,7 @@ export default function NoteEditor() {
   };
 
   return (
-    <div style={{ padding: 16 }}>
+    <div>
       {isActive ? (
         <textarea
           style={{ width: '100%', height: 100 }}

@@ -1,0 +1,15 @@
+.Top {
+  position: inherit;
+  flex-grow: 0;
+  height: 32px;
+  width: 100%;
+  display: flex;
+}
+
+.MainContent {
+  flex-grow: 1;
+}
+
+.Foot {
+  height: 2rem;
+}

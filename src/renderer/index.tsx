@@ -1,12 +1,22 @@
 import { createRoot } from 'react-dom/client';
 import { HashRouter } from 'react-router-dom';
+import { Theme } from '@radix-ui/themes';
+import { StrictMode } from 'react';
+
+import 'destyle.css'
+import '@radix-ui/themes/styles.css';
+
 import App from './App';
 
 const container = document.getElementById('root') as HTMLElement;
 createRoot(document.getElementById('root')!).render(
+  <StrictMode>
+  <Theme accentColor="ruby" appearance='light' radius="small">
   <HashRouter>
     <App />
-  </HashRouter>,
+  </HashRouter>
+  </Theme>
+  </StrictMode>
 );
 // calling IPC exposed from preload script
 window.electron.ipcRenderer.once('ipc-example', (arg) => {

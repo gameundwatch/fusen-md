@@ -1,5 +1,9 @@
 // renderer/MainWindow.tsx (例)
+import { MoveIcon, PlusIcon } from '@radix-ui/react-icons';
+import { Box, Button, Card, Container, Flex, IconButton } from '@radix-ui/themes';
 import React, { useEffect, useState, JSX } from 'react';
+
+import './index.css'
 
 type Note = {
   id: string;
@@ -40,13 +44,21 @@ export default function MainWindow(): JSX.Element {
   };
 
   return (
-    <div>
-      <button type="button" onClick={addNote}>
-        + 追加
-      </button>
-      <ul>
+    <Container>
+      <Box className='Top'>
+        <Flex direction={'row'} align={'center'} gap={'4'}>
+        <IconButton type="button" onClick={addNote} variant='soft'>
+          <PlusIcon />
+        </IconButton>
+          <Button variant='ghost'>File</Button>
+          <Button variant='ghost'>Edit</Button>
+          <Button variant='ghost'>List</Button>   
+        </Flex>
+      </Box>
+      <Box p='0.5rem'>
+      <Flex direction={'column'} gap={'1'}>
         {notes.map((note) => (
-          <li key={note.id}>
+          <Card variant='surface' size={'1'} key={note.id}>
             <strong>{note.title}</strong>
             <button
               type="button"
@@ -54,15 +66,21 @@ export default function MainWindow(): JSX.Element {
                 // サブウィンドウを開く (メインプロセスが生成)
                 window.noteAPI.openNoteWindow(note.id);
               }}
-            >
+              >
               開く
             </button>
             <button type="button" onClick={() => deleteNote(note.id)}>
               削除
             </button>
-          </li>
+          </Card>
         ))}
-      </ul>
-    </div>
+      </Flex>
+      </Box>
+    </Container>
   );
+}
+
+
+export function NoteLabel(): JSX.Element {
+  return(<></>)
 }
