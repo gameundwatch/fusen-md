@@ -1,9 +1,19 @@
 // renderer/MainWindow.tsx (例)
-import { MoveIcon, PlusIcon } from '@radix-ui/react-icons';
-import { Box, Button, Card, Container, Flex, IconButton } from '@radix-ui/themes';
+import { FileTextIcon, PlusIcon, TrashIcon } from '@radix-ui/react-icons';
+import {
+  Box,
+  Button,
+  Card,
+  Container,
+  Flex,
+  IconButton,
+  Separator,
+  Text,
+} from '@radix-ui/themes';
 import React, { useEffect, useState, JSX } from 'react';
 
-import './index.css'
+import './index.css';
+import { Label } from 'radix-ui';
 
 type Note = {
   id: string;
@@ -45,42 +55,57 @@ export default function MainWindow(): JSX.Element {
 
   return (
     <Container>
-      <Box className='Top'>
-        <Flex direction={'row'} align={'center'} gap={'4'}>
-        <IconButton type="button" onClick={addNote} variant='soft'>
-          <PlusIcon />
-        </IconButton>
-          <Button variant='ghost'>File</Button>
-          <Button variant='ghost'>Edit</Button>
-          <Button variant='ghost'>List</Button>   
+      <Box className="Top">
+        <Flex direction="row" align="center" justify="between">
+          <Box>
+            <Flex direction="row" align="center" gap="4">
+              <IconButton type="button" onClick={addNote} variant="soft">
+                <PlusIcon />
+              </IconButton>
+              <Button variant="ghost">File</Button>
+              <Button variant="ghost">Edit</Button>
+              <Button variant="ghost">List</Button>
+            </Flex>
+          </Box>
         </Flex>
       </Box>
-      <Box p='0.5rem'>
-      <Flex direction={'column'} gap={'1'}>
-        {notes.map((note) => (
-          <Card variant='surface' size={'1'} key={note.id}>
-            <strong>{note.title}</strong>
-            <button
-              type="button"
-              onClick={() => {
-                // サブウィンドウを開く (メインプロセスが生成)
-                window.noteAPI.openNoteWindow(note.id);
-              }}
-              >
-              開く
-            </button>
-            <button type="button" onClick={() => deleteNote(note.id)}>
-              削除
-            </button>
-          </Card>
-        ))}
-      </Flex>
+      <Separator size="4" orientation="horizontal" />
+      <Box p="0.5rem">
+        <Flex direction="column" gap="1">
+          {notes.map((note) => (
+            <Card variant="surface" size="1" key={note.id}>
+              <Flex direction="row" align="center" justify="between">
+                <Text size="2" weight="bold">
+                  {note.title}
+                </Text>
+                <Box>
+                  <Flex direction="row" align="center" gap="4">
+                    <Button
+                      variant="ghost"
+                      onClick={() => {
+                        // サブウィンドウを開く (メインプロセスが生成)
+                        window.noteAPI.openNoteWindow(note.id);
+                      }}
+                    >
+                      <FileTextIcon scale="4" />
+                      開く
+                    </Button>
+                    <Separator size="2" orientation="vertical" />
+                    <Button variant="ghost" onClick={() => deleteNote(note.id)}>
+                      <TrashIcon scale="4" />
+                      削除
+                    </Button>
+                  </Flex>
+                </Box>
+              </Flex>
+            </Card>
+          ))}
+        </Flex>
       </Box>
     </Container>
   );
 }
 
-
 export function NoteLabel(): JSX.Element {
-  return(<></>)
+  return <></>;
 }

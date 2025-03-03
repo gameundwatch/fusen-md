@@ -30,11 +30,12 @@ function createMainWindow() {
     titleBarStyle: 'hidden',
     titleBarOverlay: {
       height: 32,
+      color: '#fff0',
     },
   });
   // 開発中はローカルサーバ or ビルド後ファイルを読み込む
   mainWindow.loadURL(`${resolveHtmlPath('index.html')}#/`);
-  mainWindow.webContents.openDevTools()
+  mainWindow.webContents.openDevTools();
   mainWindow.on('closed', () => {
     mainWindow = null;
   });
@@ -59,7 +60,7 @@ function createNoteWindow(noteId: string) {
     autoHideMenuBar: true,
     titleBarStyle: 'hidden',
     titleBarOverlay: {
-      color: 'orange'
+      color: 'orange',
     },
   });
 
