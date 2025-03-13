@@ -30,3 +30,9 @@ div {
   -webkit-user-select: none;
   -webkit-app-region: drag;
 }
+
+.DragAnchor Button {
+  user-select: auto;
+  -webkit-user-select: auto;
+  -webkit-app-region: no-drag;
+}

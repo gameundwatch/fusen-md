@@ -1,0 +1,50 @@
+.AppWindow {
+  height: 100vh;
+}
+
+.Top {
+  position: inherit;
+  flex-grow: 0;
+  min-height: 32px;
+  width: 100%;
+  display: flex;
+  border-bottom: 1px solid var(--gray-2);
+  background-color: var(--gray-4);
+}
+
+.Top .MenuContents {
+  flex-grow: 1;
+}
+
+.MainContents {
+  flex-grow: 1;
+  overflow-y: scroll;
+  background-color: var(--gray-3);
+}
+
+.MainContents::-webkit-scrollbar{
+  width: 4px;
+  background: var(--accent-3);
+}
+
+.MainContents::-webkit-scrollbar-thumb{
+  background: var(--accent-6);
+}
+
+.MainContents::-webkit-scrollbar-thumb:hover{
+  background: var(--accent-6);
+}
+
+.FusenCard {
+  border: solid 1px var(--accent-6);
+}
+
+.Foot {
+  position: inherit;
+  flex-grow: 0;
+  min-height: 2rem;
+  padding: 0.2rem;
+  display: flex;
+  background-color: var(--gray-4);
+}
+

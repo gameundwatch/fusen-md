@@ -1,5 +1,5 @@
 // renderer/MainWindow.tsx (例)
-import { FileTextIcon, PlusIcon, TrashIcon } from '@radix-ui/react-icons';
+import { FileTextIcon, Pencil1Icon, PlusIcon, SunIcon, TrashIcon } from '@radix-ui/react-icons';
 import {
   Box,
   Button,
@@ -7,13 +7,13 @@ import {
   Container,
   Flex,
   IconButton,
+  Inset,
   Separator,
   Text,
 } from '@radix-ui/themes';
 import React, { useEffect, useState, JSX } from 'react';
 
 import './index.css';
-import { Label } from 'radix-ui';
 
 type Note = {
   id: string;
@@ -21,7 +21,7 @@ type Note = {
   content: string;
 };
 
-export default function MainWindow(): JSX.Element {
+export function MainWindow(): JSX.Element {
   const [notes, setNotes] = useState<Note[]>([]);
 
   // マウント時にメインプロセスから付箋一覧を取得
@@ -55,46 +55,50 @@ export default function MainWindow(): JSX.Element {
 
   return (
     <Container>
-      <Box className="Top">
+      <Flex className="AppWindow" direction="column" justify="between">
+      <Box className="Top DragAnchor">
         <Flex direction="row" align="center" justify="between">
-          <Box>
-            <Flex direction="row" align="center" gap="4">
-              <IconButton type="button" onClick={addNote} variant="soft">
-                <PlusIcon />
-              </IconButton>
+          <Box className='MenuContents'>
+            <Flex ml="2" direction="row" align="center" gap="4">
+              <SunIcon color="violet"/>
               <Button variant="ghost">File</Button>
               <Button variant="ghost">Edit</Button>
               <Button variant="ghost">List</Button>
             </Flex>
           </Box>
+          <Box className="WindowControls"></Box>
         </Flex>
       </Box>
-      <Separator size="4" orientation="horizontal" />
-      <Box p="0.5rem">
-        <Flex direction="column" gap="1">
+      <Box className="MainContents" p="0.5rem">
+        <Flex direction="column" justify="start" gap="2">
           {notes.map((note) => (
-            <Card variant="surface" size="1" key={note.id}>
+            <Card className="FusenCard" variant="surface" key={note.id}>
               <Flex direction="row" align="center" justify="between">
                 <Text size="2" weight="bold">
                   {note.title}
                 </Text>
                 <Box>
                   <Flex direction="row" align="center" gap="4">
-                    <Button
+                    <Text size="1" color="gray">
+                      {/* {note.date} */"YYYY/MM/DD"}
+                    </Text>
+                    <IconButton
                       variant="ghost"
+                      radius="full"
                       onClick={() => {
-                        // サブウィンドウを開く (メインプロセスが生成)
                         window.noteAPI.openNoteWindow(note.id);
                       }}
-                    >
+                      >
                       <FileTextIcon scale="4" />
-                      開く
-                    </Button>
-                    <Separator size="2" orientation="vertical" />
-                    <Button variant="ghost" onClick={() => deleteNote(note.id)}>
+                    </IconButton>
+                    <IconButton
+                      color="red"
+                      className="DeleteButton"
+                      variant="ghost"
+                      radius="full"
+                      onClick={() => deleteNote(note.id)}>
                       <TrashIcon scale="4" />
-                      削除
-                    </Button>
+                    </IconButton>
                   </Flex>
                 </Box>
               </Flex>
@@ -102,10 +106,15 @@ export default function MainWindow(): JSX.Element {
           ))}
         </Flex>
       </Box>
+      <Box className="Foot">
+      <Flex direction="row" align="center" gap="4">
+        <Button type="button" onClick={addNote} variant="soft" radius="full" size="1">
+          New Note
+          <Pencil1Icon />
+        </Button>
+      </Flex>
+      </Box>
+      </Flex>
     </Container>
   );
-}
-
-export function NoteLabel(): JSX.Element {
-  return <></>;
 }

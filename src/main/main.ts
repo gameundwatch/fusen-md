@@ -9,9 +9,7 @@ interface Note {
   content: string;
 }
 
-let notes: Note[] = [
-  { id: '1', title: 'サンプル', content: '**Hello** from *Markdown*' },
-];
+let notes: Note[] = [];
 
 // メインウィンドウやサブウィンドウを作るための変数
 let mainWindow: BrowserWindow | null = null;
@@ -31,6 +29,7 @@ function createMainWindow() {
     titleBarOverlay: {
       height: 32,
       color: '#fff0',
+      symbolColor: '#fffa'
     },
   });
   // 開発中はローカルサーバ or ビルド後ファイルを読み込む
@@ -60,7 +59,9 @@ function createNoteWindow(noteId: string) {
     autoHideMenuBar: true,
     titleBarStyle: 'hidden',
     titleBarOverlay: {
-      color: 'orange',
+      height: 32,
+      color: '#fff0',
+      symbolColor: '#fffa'
     },
   });
 

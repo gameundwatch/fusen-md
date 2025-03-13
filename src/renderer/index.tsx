@@ -11,7 +11,7 @@ import App from './App';
 const container = document.getElementById('root') as HTMLElement;
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <Theme accentColor="ruby" appearance="dark" radius="small">
+    <Theme accentColor="green" appearance="dark" radius="small">
       <HashRouter>
         <App />
       </HashRouter>
