@@ -3,7 +3,7 @@ import { Box, Button, DropdownMenu, Flex, IconButton } from "@radix-ui/themes";
 
 import "./index.css"
 
-function MenuFile() {
+function DropdownMenuFile() {
   return (
         <>
           <DropdownMenu.Trigger>
@@ -39,7 +39,7 @@ export function TopBar() {
     <Box className='MenuContents'>
       <Flex ml="2" direction="row" align="center" gap="4">
         <DropdownMenu.Root>
-          <MenuFile />
+          <DropdownMenuFile />
         </DropdownMenu.Root>
       </Flex>
     </Box>

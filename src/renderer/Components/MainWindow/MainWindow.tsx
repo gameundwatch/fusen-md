@@ -14,7 +14,7 @@ import {
 import React, { useEffect, useState, JSX } from 'react';
 
 import './index.css';
-import { TopBar } from './TopBar';
+import { TopBar } from './TopBar/TopBar';
 
 type Note = {
   id: string;
