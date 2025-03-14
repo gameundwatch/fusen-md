@@ -1,0 +1,66 @@
+
+.MdViewer * {
+}
+
+.NoteEditor {
+    border: solid 0px;
+    border-radius: 16px;
+}
+
+.NoteEditor .Top {
+    background-color: var(--accent-3);
+}
+
+.NoteEditor .Body {
+    background-color: var(--gray-3);
+}
+
+.NoteEditor .Body Textarea {
+    font-family: 'Courier New', Courier, monospace;
+    background-color: var(--gray-3);
+}
+
+.MdViewer {
+    font-size: 16px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.MdViewer p {
+    margin: 1em 0;
+}
+
+.MdViewer h1 {
+    font-weight: 900;
+    font-size: 2em;
+    margin-bottom: 0.5em;
+}
+
+.MdViewer h2 {
+    font-weight: 900;
+    font-size: 1.6em;
+}
+
+.MdViewer h3 {
+    font-weight: 900;
+    font-size: 1.5em;
+}
+
+.MdViewer h4 {
+    font-weight: 700;
+    font-size: 1.4em;
+}
+
+.MdViewer h5 {
+    font-weight: 700;
+    font-size: 1.2em;
+}
+
+.MdViewer h6 {
+    font-weight: 700;
+    font-size: 1em;
+}
+
+
+.MdViewer p {
+    
+}

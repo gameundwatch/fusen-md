@@ -1,5 +1,5 @@
 // renderer/MainWindow.tsx (例)
-import { FileTextIcon, Pencil1Icon, PlusIcon, SunIcon, TrashIcon } from '@radix-ui/react-icons';
+import { FileTextIcon, GearIcon, Pencil1Icon, PlusIcon, SunIcon, TrashIcon } from '@radix-ui/react-icons';
 import {
   Box,
   Button,
@@ -56,14 +56,14 @@ export function MainWindow(): JSX.Element {
   return (
     <Container>
       <Flex className="AppWindow" direction="column" justify="between">
-      <Box className="Top DragAnchor">
+      <Box className="Top DragAnchor" width="100%" minHeight="32px">
         <Flex direction="row" align="center" justify="between">
           <Box className='MenuContents'>
             <Flex ml="2" direction="row" align="center" gap="4">
               <SunIcon color="violet"/>
-              <Button variant="ghost">File</Button>
-              <Button variant="ghost">Edit</Button>
-              <Button variant="ghost">List</Button>
+              <Button variant="ghost" radius="none">File</Button>
+              <Button variant="ghost" radius="none">Edit</Button>
+              <Button variant="ghost" radius="none">List</Button>
             </Flex>
           </Box>
           <Box className="WindowControls"></Box>
@@ -106,12 +106,22 @@ export function MainWindow(): JSX.Element {
           ))}
         </Flex>
       </Box>
-      <Box className="Foot">
-      <Flex direction="row" align="center" gap="4">
-        <Button type="button" onClick={addNote} variant="soft" radius="full" size="1">
-          New Note
-          <Pencil1Icon />
-        </Button>
+      <Box className="Foot" p="1" flexGrow="0">
+      <Flex direction="row" align="center" justify="between">
+        <Box flexGrow="1">
+          <Flex direction="row" align="center" justify="start" gap="4">
+            <Button type="button" onClick={addNote} variant="ghost" radius="none" size="1">
+              <Pencil1Icon />
+            </Button>
+          </Flex>
+        </Box>
+        <Box flexGrow="1">
+          <Flex direction="row" align="center" justify="end">
+            <IconButton type="button" variant="ghost" radius="none" size="1">
+              <GearIcon />
+            </IconButton>
+          </Flex>
+        </Box>
       </Flex>
       </Box>
       </Flex>

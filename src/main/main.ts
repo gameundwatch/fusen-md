@@ -9,7 +9,9 @@ interface Note {
   content: string;
 }
 
-let notes: Note[] = [];
+let notes: Note[] = [
+  {id: "1", title: "Hello Fusen.md", content: "# Hello Fusen.MD!"}
+];
 
 // メインウィンドウやサブウィンドウを作るための変数
 let mainWindow: BrowserWindow | null = null;
@@ -50,6 +52,7 @@ function createNoteWindow(noteId: string) {
   const child = new BrowserWindow({
     width: 300,
     height: 200,
+    transparent: true,
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,
@@ -58,11 +61,11 @@ function createNoteWindow(noteId: string) {
     alwaysOnTop: true,
     autoHideMenuBar: true,
     titleBarStyle: 'hidden',
-    titleBarOverlay: {
-      height: 32,
-      color: '#fff0',
-      symbolColor: '#fffa'
-    },
+    // titleBarOverlay: {
+    //   height: 24,
+    //   color: '#fff0',
+    //   symbolColor: '#fffa'
+    // },
   });
 
   child.loadURL(`${resolveHtmlPath('index.html')}#/note?noteId=${noteId}`);

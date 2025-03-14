@@ -1,7 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
 
 import { MainWindow } from './Components/MainWindow';
-import NoteEditor from './Components/NoteEditor';
+import { NoteEditor } from './Components/NoteEditor';
 import './App.css';
 
 export default function App() {

@@ -2,6 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import queryString from 'query-string';
 import ReactMarkdown from 'react-markdown';
+import { Box, Button, Container, Flex, IconButton, TextArea } from '@radix-ui/themes';
+import { Cross1Icon, EyeClosedIcon, GearIcon, HomeIcon, Pencil2Icon, TextIcon } from '@radix-ui/react-icons';
+
+import "./index.css"
+import "./MdViewer.css"
 
 type Note = {
   id: string;
@@ -9,7 +14,7 @@ type Note = {
   content: string;
 };
 
-export default function NoteEditor() {
+export function NoteEditor() {
   const location = useLocation();
   const params = queryString.parse(location.search);
   const noteId = params.noteId as string | undefined;
@@ -72,19 +77,46 @@ export default function NoteEditor() {
   };
 
   return (
-    <div>
+    <Container width="100%" height="100vh" className="NoteEditor">
+      <Flex direction="column" width="100%" height="100%" justify="between">
+      <Box width="100%" minHeight="24px" className="Top DragAnchor" p="1" flexGrow="0">
+      <Flex width="100%" direction="row" align="center" justify="between">
+          <Box flexGrow="1">
+            <Flex direction="row" align="center" justify="start" gap="2">
+              <IconButton type="button" variant="ghost" radius="none" size="1" disabled={!isActive}>
+                <Pencil2Icon/>
+              </IconButton>
+              <IconButton type="button" variant="ghost" radius="none" size="1" disabled={!isActive}>
+                <GearIcon />
+              </IconButton>
+            </Flex>
+          </Box>
+          <Box flexGrow="0">
+            <Flex direction="row" align="center" justify="end" gap="2">
+              <IconButton type="button" variant="ghost" radius="none" size="1" disabled={!isActive}>
+                <Cross1Icon />
+              </IconButton>
+            </Flex>
+          </Box>
+      </Flex>
+      </Box>
+      <Box width="100%" flexGrow="1" className="Body">
       {isActive ? (
-        <textarea
-          style={{ width: '100%', height: 100 }}
-          value={draft}
-          onChange={(e) => setDraft(e.target.value)}
-          onBlur={saveContent} // 焦点が外れたら保存
+        <TextArea
+        value={draft}
+        variant="surface"
+        className="MdEditor"
+        radius="none"
+        onChange={(e) => setDraft(e.target.value)}
+        onBlur={saveContent} // 焦点が外れたら保存
         />
       ) : (
-        <div style={{ backgroundColor: '#f0f0f0', marginTop: 8 }}>
+        <Box className="MdViewer" p="2">
           <ReactMarkdown>{note.content}</ReactMarkdown>
-        </div>
+        </Box>
       )}
-    </div>
+      </Box>
+      </Flex>
+    </Container>
   );
 }
