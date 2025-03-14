@@ -14,6 +14,10 @@ type Note = {
   content: string;
 };
 
+const closeNote = async (noteId: string) => {
+  await window.noteAPI.closeNoteWindow(noteId);
+};
+
 export function NoteEditor() {
   const location = useLocation();
   const params = queryString.parse(location.search);
@@ -81,23 +85,27 @@ export function NoteEditor() {
       <Flex direction="column" width="100%" height="100%" justify="between">
       <Box width="100%" minHeight="24px" className="Top DragAnchor" p="1" flexGrow="0">
       <Flex width="100%" direction="row" align="center" justify="between">
+      { isActive?
+        <>
           <Box flexGrow="1">
             <Flex direction="row" align="center" justify="start" gap="2">
-              <IconButton type="button" variant="ghost" radius="none" size="1" disabled={!isActive}>
+              <IconButton type="button" variant="ghost" radius="none" size="1">
                 <Pencil2Icon/>
               </IconButton>
-              <IconButton type="button" variant="ghost" radius="none" size="1" disabled={!isActive}>
+              <IconButton type="button" variant="ghost" radius="none" size="1">
                 <GearIcon />
               </IconButton>
             </Flex>
           </Box>
           <Box flexGrow="0">
             <Flex direction="row" align="center" justify="end" gap="2">
-              <IconButton type="button" variant="ghost" radius="none" size="1" disabled={!isActive}>
+              <IconButton type="button" variant="ghost" radius="none" size="1" onClick={()=>closeNote(noteId)}>
                 <Cross1Icon />
               </IconButton>
             </Flex>
           </Box>
+        </>
+      : <></> }
       </Flex>
       </Box>
       <Box width="100%" flexGrow="1" className="Body">
@@ -111,7 +119,7 @@ export function NoteEditor() {
         onBlur={saveContent} // 焦点が外れたら保存
         />
       ) : (
-        <Box className="MdViewer" p="2">
+        <Box className="MdViewer" p="1">
           <ReactMarkdown>{note.content}</ReactMarkdown>
         </Box>
       )}

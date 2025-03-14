@@ -10,10 +10,7 @@ export interface Note {
 export const dummyNoteAtom = atom<Note | undefined>(undefined);
 
 // 全付箋を保持するメインatom
-export const notesAtom = atom<Note[]>([
-  // { id: '12345', title: 'サンプル付箋', content: '**Hello** from *Markdown*' },
-  // 必要に応じて初期値を追加
-]);
+export const notesAtom = atom<Note[]>([]);
 
 // 読み書き可能な derived atom
 export const noteByIdAtom = (id: string) =>

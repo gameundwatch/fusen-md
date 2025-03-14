@@ -26,18 +26,33 @@
 }
 
 .MdViewer p {
-    margin: 1em 0;
+    margin: 0.5em 0;
+}
+
+.MdViewer strong {
+    font-weight: 700;
+}
+
+.MdViewer em {
+    font-style: italic;
+}
+
+.MdViewer del {
+    text-decoration: line-through;
 }
 
 .MdViewer h1 {
     font-weight: 900;
     font-size: 2em;
+    border-bottom: solid 1px #fff8;
     margin-bottom: 0.5em;
+    
 }
 
 .MdViewer h2 {
     font-weight: 900;
     font-size: 1.6em;
+    border-bottom: solid 1px #fff8;
 }
 
 .MdViewer h3 {
@@ -60,7 +75,30 @@
     font-size: 1em;
 }
 
-
-.MdViewer p {
-    
+.MdViewer ul {
+    list-style: disc;
 }
+
+.MdViewer ul ::marker{
+        unicode-bidi: isolate;
+        font-variant-numeric: tabular-nums;
+        text-transform: none;
+        text-indent: 0px !important;
+        text-align: start !important;
+        text-align-last: start !important;
+}
+
+.MdViewer ol {
+    list-style: decimal;
+}
+
+.MdViewer ol ::marker {
+    unicode-bidi: isolate;
+    font-variant-numeric: tabular-nums;
+    text-transform: none;
+    text-indent: 0px !important;
+    text-align: start !important;
+    text-align-last: start !important;
+}
+
+
