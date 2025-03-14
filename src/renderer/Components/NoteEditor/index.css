@@ -3,5 +3,8 @@
     height: 100vh;
 }
 
-.NoteEditor textarea {
+textarea.MdEditor {
+    width: 100%;
+    border: solid 0px transparent;
+    outline: 0px;
 }

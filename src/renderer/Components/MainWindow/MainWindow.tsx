@@ -14,6 +14,7 @@ import {
 import React, { useEffect, useState, JSX } from 'react';
 
 import './index.css';
+import { TopBar } from './TopBar';
 
 type Note = {
   id: string;
@@ -55,20 +56,8 @@ export function MainWindow(): JSX.Element {
 
   return (
     <Container>
-      <Flex className="AppWindow" direction="column" justify="between">
-      <Box className="Top DragAnchor" width="100%" minHeight="32px">
-        <Flex direction="row" align="center" justify="between">
-          <Box className='MenuContents'>
-            <Flex ml="2" direction="row" align="center" gap="4">
-              <SunIcon color="violet"/>
-              <Button variant="ghost" radius="none">File</Button>
-              <Button variant="ghost" radius="none">Edit</Button>
-              <Button variant="ghost" radius="none">List</Button>
-            </Flex>
-          </Box>
-          <Box className="WindowControls"></Box>
-        </Flex>
-      </Box>
+      <Flex className="MainWindow" direction="column" justify="between">
+      <TopBar />
       <Box className="MainContents" p="0.5rem">
         <Flex direction="column" justify="start" gap="2">
           {notes.map((note) => (

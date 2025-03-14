@@ -2,20 +2,15 @@
 .MdViewer * {
 }
 
-.NoteEditor {
-    border: solid 0px;
-    border-radius: 16px;
-}
-
-.NoteEditor .Top {
+.Note .Top {
     background-color: var(--accent-3);
 }
 
-.NoteEditor .Body {
+.Note .Body {
     background-color: var(--gray-3);
 }
 
-.NoteEditor .Body Textarea {
+.Note .Body Textarea {
     font-family: 'Courier New', Courier, monospace;
     background-color: var(--gray-3);
 }

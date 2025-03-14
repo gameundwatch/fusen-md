@@ -1,7 +1,5 @@
 import { FileTextIcon, Pencil1Icon, PlusIcon, SunIcon, TrashIcon } from '@radix-ui/react-icons';
 import { Card, Flex, Text, IconButton, Box } from "@radix-ui/themes";
-import { Note } from '../../atoms/notesAtom';
-
 
 export function NoteLabel() {
 

@@ -1,5 +1,9 @@
-.AppWindow {
+.MainWindow {
   height: 100vh;
+}
+
+.MainWindow .Top {
+  height: 32px;
 }
 
 .Top {

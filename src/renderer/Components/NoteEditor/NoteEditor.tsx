@@ -81,7 +81,7 @@ export function NoteEditor() {
   };
 
   return (
-    <Container width="100%" height="100vh" className="NoteEditor">
+    <Container width="100%" height="100vh" className="Note">
       <Flex direction="column" width="100%" height="100%" justify="between">
       <Box width="100%" minHeight="24px" className="Top DragAnchor" p="1" flexGrow="0">
       <Flex width="100%" direction="row" align="center" justify="between">
@@ -110,11 +110,9 @@ export function NoteEditor() {
       </Box>
       <Box width="100%" flexGrow="1" className="Body">
       {isActive ? (
-        <TextArea
+        <textarea
         value={draft}
-        variant="surface"
         className="MdEditor"
-        radius="none"
         onChange={(e) => setDraft(e.target.value)}
         onBlur={saveContent} // 焦点が外れたら保存
         />
