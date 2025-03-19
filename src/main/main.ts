@@ -2,12 +2,7 @@
 import { app, BrowserWindow, ipcMain } from 'electron';
 import path from 'path';
 import { resolveHtmlPath } from './util';
-
-interface Note {
-  id: string;
-  title: string;
-  content: string;
-}
+import { Note } from '../common/note';
 
 let notes: Note[] = [
   { id: '1', title: 'Hello Fusen.md', content: '# Hello Fusen.MD!' },

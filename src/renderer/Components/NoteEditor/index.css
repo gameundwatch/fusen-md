@@ -8,3 +8,8 @@ textarea.MdEditor {
     border: solid 0px transparent;
     outline: 0px;
 }
+
+.Active .Edit {
+  background-color: var(--gray-4);
+  border-bottom: solid 1px var(--gray-5);
+}

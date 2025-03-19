@@ -1,30 +1,12 @@
 // renderer/MainWindow.tsx (例)
-import {
-  FileTextIcon,
-  GearIcon,
-  Pencil1Icon,
-  TrashIcon,
-} from '@radix-ui/react-icons';
-import {
-  Box,
-  Button,
-  Card,
-  Container,
-  Flex,
-  IconButton,
-  Text,
-} from '@radix-ui/themes';
+import { GearIcon, Pencil1Icon } from '@radix-ui/react-icons';
+import { Box, Button, Container, Flex, IconButton } from '@radix-ui/themes';
 import React, { useEffect, useState, JSX } from 'react';
 
 import './index.css';
 import { TopBar } from './TopBar/TopBar';
 import { NoteLabel } from './NoteLabel';
-
-type Note = {
-  id: string;
-  title: string;
-  content: string;
-};
+import { Note } from '../../../common/note';
 
 export function MainWindow(): JSX.Element {
   const [notes, setNotes] = useState<Note[]>([]);
