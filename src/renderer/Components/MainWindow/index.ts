@@ -1,3 +1,2 @@
-
-export { MainWindow } from "./MainWindow"
-export { NoteLabel } from "./NoteLabel"
+export { MainWindow } from './MainWindow';
+export { NoteLabel } from './NoteLabel';

@@ -10,7 +10,7 @@ interface Note {
 }
 
 let notes: Note[] = [
-  {id: "1", title: "Hello Fusen.md", content: "# Hello Fusen.MD!"}
+  { id: '1', title: 'Hello Fusen.md', content: '# Hello Fusen.MD!' },
 ];
 
 // メインウィンドウやサブウィンドウを作るための変数
@@ -28,11 +28,15 @@ function createMainWindow() {
     },
     autoHideMenuBar: true,
     titleBarStyle: 'hidden',
-    titleBarOverlay: {
-      height: 32,
-      color: '#fff0',
-      symbolColor: '#fffa'
-    },
+    ...(process.platform !== 'darwin'
+      ? {
+          titleBarOverlay: {
+            height: 32,
+            color: '#fff0',
+            symbolColor: '#fffa',
+          },
+        }
+      : {}),
   });
   // 開発中はローカルサーバ or ビルド後ファイルを読み込む
   mainWindow.loadURL(`${resolveHtmlPath('index.html')}#/`);
@@ -57,6 +61,7 @@ function createNoteWindow(noteId: string) {
       nodeIntegration: false,
       contextIsolation: true,
       preload: path.join(__dirname, 'preload.js'),
+      devTools: true,
     },
     alwaysOnTop: true,
     autoHideMenuBar: true,
@@ -69,6 +74,7 @@ function createNoteWindow(noteId: string) {
   });
 
   child.loadURL(`${resolveHtmlPath('index.html')}#/note?noteId=${noteId}`);
+  child.webContents.openDevTools();
   child.on('closed', () => {
     noteWindows.delete(noteId);
   });
