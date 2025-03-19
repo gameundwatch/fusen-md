@@ -1,5 +1,10 @@
 // renderer/MainWindow.tsx (例)
-import { FileTextIcon, GearIcon, Pencil1Icon, PlusIcon, SunIcon, TrashIcon } from '@radix-ui/react-icons';
+import {
+  FileTextIcon,
+  GearIcon,
+  Pencil1Icon,
+  TrashIcon,
+} from '@radix-ui/react-icons';
 import {
   Box,
   Button,
@@ -7,14 +12,13 @@ import {
   Container,
   Flex,
   IconButton,
-  Inset,
-  Separator,
   Text,
 } from '@radix-ui/themes';
 import React, { useEffect, useState, JSX } from 'react';
 
 import './index.css';
 import { TopBar } from './TopBar/TopBar';
+import { NoteLabel } from './NoteLabel';
 
 type Note = {
   id: string;
@@ -57,63 +61,46 @@ export function MainWindow(): JSX.Element {
   return (
     <Container>
       <Flex className="MainWindow" direction="column" justify="between">
-      <TopBar />
-      <Box className="MainContents" p="0.5rem">
-        <Flex direction="column" justify="start" gap="2">
-          {notes.map((note) => (
-            <Card className="FusenCard" variant="surface" key={note.id}>
-              <Flex direction="row" align="center" justify="between">
-                <Text size="2" weight="bold">
-                  {note.title}
-                </Text>
-                <Box>
-                  <Flex direction="row" align="center" gap="4">
-                    <Text size="1" color="gray">
-                      {/* {note.date} */"YYYY/MM/DD"}
-                    </Text>
-                    <IconButton
-                      variant="ghost"
-                      radius="full"
-                      onClick={() => {
-                        window.noteAPI.openNoteWindow(note.id);
-                      }}
-                      >
-                      <FileTextIcon scale="4" />
-                    </IconButton>
-                    <IconButton
-                      color="red"
-                      className="DeleteButton"
-                      variant="ghost"
-                      radius="full"
-                      onClick={() => deleteNote(note.id)}>
-                      <TrashIcon scale="4" />
-                    </IconButton>
-                  </Flex>
-                </Box>
+        <TopBar addNote={addNote} />
+        <Box className="MainContents" p="0.5rem">
+          <Flex direction="column" justify="start" gap="2">
+            {notes.map((note) => (
+              <NoteLabel note={note} deleteNote={deleteNote} />
+            ))}
+          </Flex>
+        </Box>
+        <Box className="Foot" p="1" flexGrow="0">
+          <Flex direction="row" align="center" justify="between">
+            <Box flexGrow="1">
+              <Flex direction="row" align="center" justify="start" gap="4">
+                <Button
+                  type="button"
+                  onClick={addNote}
+                  variant="ghost"
+                  radius="none"
+                  size="1"
+                >
+                  <Pencil1Icon />
+                </Button>
               </Flex>
-            </Card>
-          ))}
-        </Flex>
-      </Box>
-      <Box className="Foot" p="1" flexGrow="0">
-      <Flex direction="row" align="center" justify="between">
-        <Box flexGrow="1">
-          <Flex direction="row" align="center" justify="start" gap="4">
-            <Button type="button" onClick={addNote} variant="ghost" radius="none" size="1">
-              <Pencil1Icon />
-            </Button>
+            </Box>
+            <Box flexGrow="1">
+              <Flex direction="row" align="center" justify="end">
+                <IconButton
+                  type="button"
+                  variant="ghost"
+                  radius="none"
+                  size="1"
+                >
+                  <GearIcon />
+                </IconButton>
+              </Flex>
+            </Box>
           </Flex>
         </Box>
-        <Box flexGrow="1">
-          <Flex direction="row" align="center" justify="end">
-            <IconButton type="button" variant="ghost" radius="none" size="1">
-              <GearIcon />
-            </IconButton>
-          </Flex>
-        </Box>
-      </Flex>
-      </Box>
       </Flex>
     </Container>
   );
 }
+
+export default MainWindow;

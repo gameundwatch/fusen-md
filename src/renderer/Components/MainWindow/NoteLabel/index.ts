@@ -1,0 +1,1 @@
+export { NoteLabel } from './NoteLabel';

@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import queryString from 'query-string';
 import ReactMarkdown from 'react-markdown';
-import { Box, Button, Container, Flex, IconButton, TextArea } from '@radix-ui/themes';
-import { Cross1Icon, EyeClosedIcon, GearIcon, HomeIcon, Pencil2Icon, TextIcon } from '@radix-ui/react-icons';
+import { Box, Container, Flex, IconButton } from '@radix-ui/themes';
+import { Cross1Icon, GearIcon, Pencil2Icon } from '@radix-ui/react-icons';
 
-import "./index.css"
-import "./MdViewer.css"
+import './index.css';
+import './MdViewer.css';
 
 type Note = {
   id: string;
@@ -40,7 +40,7 @@ export function NoteEditor() {
         return true;
       })
       .catch((e) => {
-        console.log(e);
+        console.error(e.message);
       });
   }, [noteId]);
 
@@ -83,46 +83,72 @@ export function NoteEditor() {
   return (
     <Container width="100%" height="100vh" className="Note">
       <Flex direction="column" width="100%" height="100%" justify="between">
-      <Box width="100%" minHeight="24px" className="Top DragAnchor" p="1" flexGrow="0">
-      <Flex width="100%" direction="row" align="center" justify="between">
-      { isActive?
-        <>
-          <Box flexGrow="1">
-            <Flex direction="row" align="center" justify="start" gap="2">
-              <IconButton type="button" variant="ghost" radius="none" size="1">
-                <Pencil2Icon/>
-              </IconButton>
-              <IconButton type="button" variant="ghost" radius="none" size="1">
-                <GearIcon />
-              </IconButton>
-            </Flex>
-          </Box>
-          <Box flexGrow="0">
-            <Flex direction="row" align="center" justify="end" gap="2">
-              <IconButton type="button" variant="ghost" radius="none" size="1" onClick={()=>closeNote(noteId)}>
-                <Cross1Icon />
-              </IconButton>
-            </Flex>
-          </Box>
-        </>
-      : <></> }
-      </Flex>
-      </Box>
-      <Box width="100%" flexGrow="1" className="Body">
-      {isActive ? (
-        <textarea
-        value={draft}
-        className="MdEditor"
-        onChange={(e) => setDraft(e.target.value)}
-        onBlur={saveContent} // 焦点が外れたら保存
-        />
-      ) : (
-        <Box className="MdViewer" p="1">
-          <ReactMarkdown>{note.content}</ReactMarkdown>
+        <Box
+          width="100%"
+          minHeight="24px"
+          className="Top DragAnchor"
+          p="1"
+          flexGrow="0"
+        >
+          <Flex width="100%" direction="row" align="center" justify="between">
+            {isActive ? (
+              <>
+                <Box flexGrow="1">
+                  <Flex direction="row" align="center" justify="start" gap="2">
+                    <IconButton
+                      type="button"
+                      variant="ghost"
+                      radius="none"
+                      size="1"
+                    >
+                      <Pencil2Icon />
+                    </IconButton>
+                    <IconButton
+                      type="button"
+                      variant="ghost"
+                      radius="none"
+                      size="1"
+                    >
+                      <GearIcon />
+                    </IconButton>
+                  </Flex>
+                </Box>
+                <Box flexGrow="0">
+                  <Flex direction="row" align="center" justify="end" gap="2">
+                    <IconButton
+                      type="button"
+                      variant="ghost"
+                      radius="none"
+                      size="1"
+                      onClick={() => closeNote(noteId)}
+                    >
+                      <Cross1Icon />
+                    </IconButton>
+                  </Flex>
+                </Box>
+              </>
+            ) : (
+              <div />
+            )}
+          </Flex>
         </Box>
-      )}
-      </Box>
+        <Box width="100%" flexGrow="1" className="Body">
+          {isActive ? (
+            <textarea
+              value={draft}
+              className="MdEditor"
+              onChange={(e) => setDraft(e.target.value)}
+              onBlur={saveContent} // 焦点が外れたら保存
+            />
+          ) : (
+            <Box className="MdViewer" p="1">
+              <ReactMarkdown>{note.content}</ReactMarkdown>
+            </Box>
+          )}
+        </Box>
       </Flex>
     </Container>
   );
 }
+
+export default NoteEditor;
