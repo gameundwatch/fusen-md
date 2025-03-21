@@ -32,6 +32,10 @@ function createMainWindow() {
           },
         }
       : {}),
+    trafficLightPosition: {
+      x: 8,
+      y: 8,
+    },
   });
   // 開発中はローカルサーバ or ビルド後ファイルを読み込む
   mainWindow.loadURL(`${resolveHtmlPath('index.html')}#/`);
@@ -73,6 +77,7 @@ function createNoteWindow(noteId: string) {
   child.on('closed', () => {
     noteWindows.delete(noteId);
   });
+  child.setWindowButtonVisibility(false);
   noteWindows.set(noteId, child);
 }
 

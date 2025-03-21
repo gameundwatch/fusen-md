@@ -98,150 +98,133 @@ export function NoteEditor() {
       height="100vh"
       className={isActive ? 'Note Active' : 'Note Inactive'}
     >
-      {isActive ? (
-        <Flex direction="column" width="100%" height="100%" justify="between">
-          <Box
-            width="100%"
-            height="24px"
-            minHeight="24px"
-            className="Top DragAnchor"
-            p="1"
-            flexGrow="0"
-          >
-            <Flex width="100%" direction="row" align="center" justify="between">
-              <Box flexGrow="1">
-                <Flex direction="row" align="center" justify="start" gap="2">
-                  <IconButton
-                    type="button"
-                    variant="ghost"
-                    radius="none"
-                    size="1"
-                  >
-                    <Pencil2Icon />
-                  </IconButton>
-                  <IconButton
-                    type="button"
-                    variant="ghost"
-                    radius="none"
-                    size="1"
-                  >
-                    <GearIcon />
-                  </IconButton>
-                </Flex>
-              </Box>
-              <Box flexGrow="0">
-                <Flex direction="row" align="center" justify="end" gap="2">
-                  <IconButton
-                    type="button"
-                    variant="ghost"
-                    radius="none"
-                    size="1"
-                    onClick={() => closeNote(note.id)}
-                  >
-                    <Cross1Icon />
-                  </IconButton>
-                </Flex>
-              </Box>
-            </Flex>
-          </Box>
-          <Box width="100%" className="Edit" px="2" py="1" flexGrow="0">
-            <Flex width="100%" direction="row" align="center" justify="between">
-              <Box flexGrow="1">
-                <Flex direction="row" align="center" justify="start" gap="2">
-                  <IconButton
-                    type="button"
-                    variant="ghost"
-                    radius="small"
-                    size="1"
-                  >
-                    <ChevronLeftIcon />
-                  </IconButton>
-                  <IconButton
-                    type="button"
-                    variant="ghost"
-                    radius="small"
-                    size="1"
-                  >
-                    <ChevronRightIcon />
-                  </IconButton>
-                  <Separator orientation="vertical" size="1" />
-                  <IconButton
-                    type="button"
-                    variant="ghost"
-                    radius="small"
-                    size="1"
-                  >
-                    <FontBoldIcon />
-                  </IconButton>
-                  <IconButton
-                    type="button"
-                    variant="ghost"
-                    radius="small"
-                    size="1"
-                  >
-                    <FontItalicIcon />
-                  </IconButton>
-                  <IconButton
-                    type="button"
-                    variant="ghost"
-                    radius="small"
-                    size="1"
-                  >
-                    <StrikethroughIcon />
-                  </IconButton>
-                  <IconButton
-                    type="button"
-                    variant="ghost"
-                    radius="small"
-                    size="1"
-                  >
-                    <HeadingIcon />
-                  </IconButton>
-                  <Separator orientation="vertical" size="1" />
-                  <IconButton
-                    type="button"
-                    variant="ghost"
-                    radius="small"
-                    size="1"
-                  >
-                    <CodeIcon />
-                  </IconButton>
-                  <IconButton
-                    type="button"
-                    variant="ghost"
-                    radius="small"
-                    size="1"
-                  >
-                    <QuoteIcon />
-                  </IconButton>
-                  <IconButton
-                    type="button"
-                    variant="ghost"
-                    radius="small"
-                    size="1"
-                  >
-                    <ListBulletIcon />
-                  </IconButton>
-                  <IconButton
-                    type="button"
-                    variant="ghost"
-                    radius="small"
-                    size="1"
-                  >
-                    <CheckboxIcon />
-                  </IconButton>
-                  <IconButton
-                    type="button"
-                    variant="ghost"
-                    radius="small"
-                    size="1"
-                  >
-                    <DotsHorizontalIcon />
-                  </IconButton>
-                </Flex>
-              </Box>
-            </Flex>
-          </Box>
+      <Flex direction="column" width="100%" height="100%" justify="between">
+        <Box
+          width="100%"
+          height="16px"
+          minHeight="16px"
+          className="Top DragAnchor"
+          p="1"
+          flexGrow="0"
+        >
+          <Flex width="100%" direction="row" align="center" justify="between">
+            <Box flexGrow="1">
+              <Flex direction="row" align="center" justify="start" gap="2" />
+            </Box>
+            <Box flexGrow="0">
+              <Flex direction="row" align="center" justify="end" gap="2" />
+            </Box>
+          </Flex>
+        </Box>
+        <Box width="100%" className="Edit" px="2" py="1" flexGrow="0">
+          <Flex width="100%" direction="row" align="center" justify="between">
+            <Box flexGrow="1">
+              <Flex direction="row" align="center" justify="start" gap="2">
+                <IconButton
+                  type="button"
+                  variant="ghost"
+                  radius="small"
+                  size="1"
+                >
+                  <ChevronLeftIcon />
+                </IconButton>
+                <IconButton
+                  type="button"
+                  variant="ghost"
+                  radius="small"
+                  size="1"
+                >
+                  <ChevronRightIcon />
+                </IconButton>
+                <Separator orientation="vertical" size="1" />
+                <IconButton
+                  type="button"
+                  variant="ghost"
+                  radius="small"
+                  size="1"
+                >
+                  <FontBoldIcon />
+                </IconButton>
+                <IconButton
+                  type="button"
+                  variant="ghost"
+                  radius="small"
+                  size="1"
+                >
+                  <FontItalicIcon />
+                </IconButton>
+                <IconButton
+                  type="button"
+                  variant="ghost"
+                  radius="small"
+                  size="1"
+                >
+                  <StrikethroughIcon />
+                </IconButton>
+                <IconButton
+                  type="button"
+                  variant="ghost"
+                  radius="small"
+                  size="1"
+                >
+                  <HeadingIcon />
+                </IconButton>
+                <Separator orientation="vertical" size="1" />
+                <IconButton
+                  type="button"
+                  variant="ghost"
+                  radius="small"
+                  size="1"
+                >
+                  <CodeIcon />
+                </IconButton>
+                <IconButton
+                  type="button"
+                  variant="ghost"
+                  radius="small"
+                  size="1"
+                >
+                  <QuoteIcon />
+                </IconButton>
+                <IconButton
+                  type="button"
+                  variant="ghost"
+                  radius="small"
+                  size="1"
+                >
+                  <ListBulletIcon />
+                </IconButton>
+                <IconButton
+                  type="button"
+                  variant="ghost"
+                  radius="small"
+                  size="1"
+                >
+                  <CheckboxIcon />
+                </IconButton>
+                <IconButton
+                  type="button"
+                  variant="ghost"
+                  radius="small"
+                  size="1"
+                >
+                  <DotsHorizontalIcon />
+                </IconButton>
+              </Flex>
+            </Box>
+            <IconButton
+              type="button"
+              variant="ghost"
+              radius="none"
+              color="red"
+              size="1"
+              onClick={() => closeNote(note.id)}
+            >
+              <Cross1Icon />
+            </IconButton>
+          </Flex>
+        </Box>
+        {isActive ? (
           <Box width="100%" flexGrow="1" className="Body">
             <textarea
               value={draft}
@@ -250,24 +233,14 @@ export function NoteEditor() {
               onBlur={saveContent} // 焦点が外れたら保存
             />
           </Box>
-        </Flex>
-      ) : (
-        <Flex direction="column" width="100%" height="100%" justify="between">
-          <Box
-            width="100%"
-            height="24px"
-            minHeight="24px"
-            className="Top DragAnchor"
-            p="1"
-            flexGrow="0"
-          />
+        ) : (
           <Box width="100%" flexGrow="1" className="Body">
             <Box className="MdViewer" p="1">
               <ReactMarkdown>{note.content}</ReactMarkdown>
             </Box>
           </Box>
-        </Flex>
-      )}
+        )}
+      </Flex>
     </Container>
   );
 }

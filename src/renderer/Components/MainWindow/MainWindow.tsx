@@ -1,6 +1,13 @@
 // renderer/MainWindow.tsx (例)
-import { GearIcon, Pencil1Icon } from '@radix-ui/react-icons';
-import { Box, Button, Container, Flex, IconButton } from '@radix-ui/themes';
+import { GearIcon, Pencil1Icon, PlusIcon } from '@radix-ui/react-icons';
+import {
+  Box,
+  Button,
+  Container,
+  Flex,
+  IconButton,
+  Text,
+} from '@radix-ui/themes';
 import React, { useEffect, useState, JSX } from 'react';
 
 import './index.css';
@@ -43,27 +50,22 @@ export function MainWindow(): JSX.Element {
   return (
     <Container>
       <Flex className="MainWindow" direction="column" justify="between">
-        <TopBar addNote={addNote} />
+        <TopBar />
         <Box className="MainContents" p="0.5rem">
           <Flex direction="column" justify="start" gap="2">
             {notes.map((note) => (
               <NoteLabel note={note} deleteNote={deleteNote} />
             ))}
+            <Button variant="outline" onClick={addNote}>
+              <PlusIcon /> New
+            </Button>
           </Flex>
         </Box>
-        <Box className="Foot" p="1" flexGrow="0">
+        <Box className="Foot" py="1" px="2" flexGrow="0">
           <Flex direction="row" align="center" justify="between">
             <Box flexGrow="1">
               <Flex direction="row" align="center" justify="start" gap="4">
-                <Button
-                  type="button"
-                  onClick={addNote}
-                  variant="ghost"
-                  radius="none"
-                  size="1"
-                >
-                  <Pencil1Icon />
-                </Button>
+                <Text size="1">Logging...</Text>
               </Flex>
             </Box>
             <Box flexGrow="1">
