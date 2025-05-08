@@ -14,6 +14,7 @@ import './index.css';
 import { TopBar } from './TopBar/TopBar';
 import { NoteLabel } from './NoteLabel';
 import { Note } from '../../../common/note';
+import { time } from 'console';
 
 export function MainWindow(): JSX.Element {
   const [notes, setNotes] = useState<Note[]>([]);
@@ -31,9 +32,21 @@ export function MainWindow(): JSX.Element {
 
   // 新規付箋追加
   const addNote = async () => {
-    const title = 'New Note';
+    // 現在時刻からファイル名を自動生成
+    const date = new Date();
+    const title =
+      'untitled_' +
+      String(date.getFullYear()).padStart(4, '0') +
+      String(date.getMonth()).padStart(2, '0') +
+      String(date.getDate()).padStart(2, '0') +
+      '_' +
+      String(date.getHours()).padStart(2, '0') +
+      String(date.getMinutes()).padStart(2, '0') +
+      String(date.getSeconds()).padStart(2, '0');
+
     const content = '';
     const newNote = await window.noteAPI.addNote(title, content);
+
     // 追加に成功したらローカルステートも更新 or 全件再取得
     setNotes((prev) => [...prev, newNote]);
   };

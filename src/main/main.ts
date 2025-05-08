@@ -46,7 +46,6 @@ async function loadNotesFromMarkdown(dir: string): Promise<Note[]> {
     return [];
   }
 
-
   const entries = await fsPromises.readdir(dir);
   const notesFromFiles: Note[] = [];
 
@@ -67,6 +66,15 @@ async function loadNotesFromMarkdown(dir: string): Promise<Note[]> {
   });
 
   return notesFromFiles;
+}
+
+async function deleteNoteAsMarkdown(note: Note, dir: string): Promise<boolean> {
+  const fileName = `${note.title}.md`;
+  const filePath = path.join(dir, fileName);
+  console.log(filePath);
+  // force=true: 無い場合もエラーにしない
+  fs.promises.rm(filePath, { force: true });
+  return true;
 }
 
 function createMainWindow() {
@@ -192,9 +200,11 @@ ipcMain.handle('get-note-by-id', (_event, noteId: string) => {
 ipcMain.handle('add-note', (_event, newNote: Omit<Note, 'id'>) => {
   // 本来はID生成もメインプロセス側でする
   // ここでは受け取った newNote に id を付加して追加
-  const id = Date.now().toString();
+  const id = randomUUID();
   const note: Note = { id, ...newNote };
   notes.push(note);
+  // 初期ファイルを保存
+  saveNoteAsMarkdown(note, './Notes');
   return note;
 });
 
@@ -209,8 +219,13 @@ ipcMain.handle('update-note', async (_event, updatedNote: Note) => {
   return null; // 見つからなければ null
 });
 
-ipcMain.handle('delete-note', (_event, noteId: string) => {
+ipcMain.handle('delete-note', async (_event, noteId: string) => {
   const beforeLength = notes.length;
-  notes = notes.filter((n) => n.id !== noteId);
+  const target = notes.find((n) => n.id === noteId);
+  if (target) {
+    // ファイルの消去
+    deleteNoteAsMarkdown(target, './Notes');
+    notes = notes.filter((n) => n.id !== noteId);
+  }
   return notes.length < beforeLength; // 削除成功したかどうか
 });

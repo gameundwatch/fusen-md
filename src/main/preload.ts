@@ -57,15 +57,15 @@ contextBridge.exposeInMainWorld('noteAPI', {
     return updated;
   },
   // 削除
-  deleteNote: async (noteId: string) => {
-    const success = await ipcRenderer.invoke('delete-note', noteId);
+  deleteNote: async (id: string) => {
+    const success = await ipcRenderer.invoke('delete-note', id);
     return success;
   },
   // 付箋ウィンドウを開く(必要なら)
-  openNoteWindow: (noteId: string) => {
-    ipcRenderer.invoke('open-note-window', noteId);
+  openNoteWindow: (id: string) => {
+    ipcRenderer.invoke('open-note-window', id);
   },
-  closeNoteWindow: (noteId: string) => {
-    ipcRenderer.invoke('close-note-window', noteId);
+  closeNoteWindow: (id: string) => {
+    ipcRenderer.invoke('close-note-window', id);
   },
 });
