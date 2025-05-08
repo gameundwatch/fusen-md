@@ -1,5 +1,5 @@
 // renderer/MainWindow.tsx (例)
-import { GearIcon, Pencil1Icon, PlusIcon } from '@radix-ui/react-icons';
+import { GearIcon, PlusIcon } from '@radix-ui/react-icons';
 import {
   Box,
   Button,
@@ -54,7 +54,7 @@ export function MainWindow(): JSX.Element {
         <Box className="MainContents" p="0.5rem">
           <Flex direction="column" justify="start" gap="2">
             {notes.map((note) => (
-              <NoteLabel note={note} deleteNote={deleteNote} />
+              <NoteLabel key={note.id} note={note} deleteNote={deleteNote} />
             ))}
             <Button variant="outline" onClick={addNote}>
               <PlusIcon /> New

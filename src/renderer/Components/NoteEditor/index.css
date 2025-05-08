@@ -27,8 +27,17 @@ textarea.MdEditor {
 
 .Inactive .Edit {
   padding: 0px;
+  width: 0px;
   height: 0px;
   opacity: 0;
   color: transparent;
   transition: height 0.25s, padding-top 0.25s, padding-bottom 0.25s;
+}
+
+.Active .Body {
+  padding: 4px;
+}
+
+.Inactive .Body {
+  padding: 4px;
 }

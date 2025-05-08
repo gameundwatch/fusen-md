@@ -1,6 +1,8 @@
 // electron/main.ts
 import { app, BrowserWindow, ipcMain } from 'electron';
 import path from 'path';
+import fs from 'fs';
+
 import { resolveHtmlPath } from './util';
 import { Note } from '../common/note';
 
@@ -11,6 +13,27 @@ let notes: Note[] = [
 // メインウィンドウやサブウィンドウを作るための変数
 let mainWindow: BrowserWindow | null = null;
 const noteWindows = new Map<string, BrowserWindow>();
+
+// mdファイルの書き込み
+// function saveNoteAsMarkdown(note: Note, baseDir: string) {
+//   console.log(baseDir)
+//   const notesDir = path.join(baseDir, 'Notes');
+
+//   // Notesディレクトリが存在しなければ作成
+//   if (!fs.existsSync(notesDir)) {
+//     fs.mkdirSync(notesDir, { recursive: true });
+//   }
+
+//   // ファイル名を安全にする（ファイル名として使えない文字の除去）
+//   const safeTitle = note.title.replace(/[<>:"/\\|?*\x00-\x1F]/g, '_');
+//   const filePath = path.join(notesDir, `${safeTitle}.md`);
+
+//   // Markdownファイルの内容
+//   const markdownContent = `# ${note.title}\n\n${note.content}`;
+
+//   // ファイル書き込み
+//   fs.writeFileSync(filePath, markdownContent, 'utf8');
+// }
 
 function createMainWindow() {
   mainWindow = new BrowserWindow({
@@ -77,7 +100,12 @@ function createNoteWindow(noteId: string) {
   child.on('closed', () => {
     noteWindows.delete(noteId);
   });
-  child.setWindowButtonVisibility(false);
+
+  if (process.platform === 'darwin') {
+    // macOS
+    child.setWindowButtonVisibility(false);
+  }
+
   noteWindows.set(noteId, child);
 }
 
@@ -137,6 +165,7 @@ ipcMain.handle('update-note', (_event, updatedNote: Note) => {
     notes[idx] = updatedNote;
     return notes[idx];
   }
+  // saveNoteAsMarkdown(updatedNote, './');
   return null; // 見つからなければ null
 });
 

@@ -11,10 +11,8 @@ import {
   DotsHorizontalIcon,
   FontBoldIcon,
   FontItalicIcon,
-  GearIcon,
   HeadingIcon,
   ListBulletIcon,
-  Pencil2Icon,
   QuoteIcon,
   StrikethroughIcon,
 } from '@radix-ui/react-icons';
@@ -116,6 +114,7 @@ export function NoteEditor() {
             </Box>
           </Flex>
         </Box>
+
         <Box width="100%" className="Edit" px="2" py="1" flexGrow="0">
           <Flex width="100%" direction="row" align="center" justify="between">
             <Box flexGrow="1">
@@ -224,6 +223,7 @@ export function NoteEditor() {
             </IconButton>
           </Flex>
         </Box>
+
         {isActive ? (
           <Box width="100%" flexGrow="1" className="Body">
             <textarea
@@ -235,7 +235,7 @@ export function NoteEditor() {
           </Box>
         ) : (
           <Box width="100%" flexGrow="1" className="Body">
-            <Box className="MdViewer" p="1">
+            <Box className="MdViewer">
               <ReactMarkdown>{note.content}</ReactMarkdown>
             </Box>
           </Box>
