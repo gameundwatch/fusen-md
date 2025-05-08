@@ -2,20 +2,6 @@ import React, { useEffect, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 
 import { Box, Container, Flex, IconButton, Separator } from '@radix-ui/themes';
-import {
-  CheckboxIcon,
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  CodeIcon,
-  Cross1Icon,
-  DotsHorizontalIcon,
-  FontBoldIcon,
-  FontItalicIcon,
-  HeadingIcon,
-  ListBulletIcon,
-  QuoteIcon,
-  StrikethroughIcon,
-} from '@radix-ui/react-icons';
 import { useLocation } from 'react-router-dom';
 import queryString from 'query-string';
 
@@ -38,7 +24,7 @@ export function NoteEditor() {
 
   const saveContent = async () => {
     if (note) {
-      // noteの更新
+      // noteの更新、保存
       await window.noteAPI.updateNote(note.id, note.title, draft);
       // noteの再取得
       window.noteAPI

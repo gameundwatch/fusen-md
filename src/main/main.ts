@@ -1,39 +1,73 @@
 // electron/main.ts
+
 import { app, BrowserWindow, ipcMain } from 'electron';
 import path from 'path';
-import fs from 'fs';
+import fs, { promises as fsPromises } from 'fs';
+import { randomUUID } from 'crypto';
 
 import { resolveHtmlPath } from './util';
 import { Note } from '../common/note';
 
 let notes: Note[] = [
-  { id: '1', title: 'Hello Fusen.md', content: '# Hello Fusen.MD!' },
+  // { id: '1', title: 'Hello Fusen.md', content: '# Hello Fusen MD!' },
 ];
+
+const dirPath = path.join('./', 'Notes');
 
 // メインウィンドウやサブウィンドウを作るための変数
 let mainWindow: BrowserWindow | null = null;
 const noteWindows = new Map<string, BrowserWindow>();
 
 // mdファイルの書き込み
-// function saveNoteAsMarkdown(note: Note, baseDir: string) {
-//   console.log(baseDir)
-//   const notesDir = path.join(baseDir, 'Notes');
+function saveNoteAsMarkdown(note: Note, dir: string) {
+  const notesDir = path.join(dir);
 
-//   // Notesディレクトリが存在しなければ作成
-//   if (!fs.existsSync(notesDir)) {
-//     fs.mkdirSync(notesDir, { recursive: true });
-//   }
+  // Notesディレクトリが存在しなければ作成
+  if (!fs.existsSync(notesDir)) {
+    fs.mkdirSync(notesDir, { recursive: true });
+  }
 
-//   // ファイル名を安全にする（ファイル名として使えない文字の除去）
-//   const safeTitle = note.title.replace(/[<>:"/\\|?*\x00-\x1F]/g, '_');
-//   const filePath = path.join(notesDir, `${safeTitle}.md`);
+  // ファイル名を安全にする（ファイル名として使えない文字の除去）
+  const safeTitle = note.title.replace(/[<>:"/\\|?*\x00-\x1F]/g, '_');
+  const filePath = path.join(notesDir, `${safeTitle}.md`);
 
-//   // Markdownファイルの内容
-//   const markdownContent = `# ${note.title}\n\n${note.content}`;
+  // Markdownファイルの内容
+  const markdownContent = `${note.content}`;
 
-//   // ファイル書き込み
-//   fs.writeFileSync(filePath, markdownContent, 'utf8');
-// }
+  // ファイル書き込み
+  console.log(`saved: ${filePath}`);
+  fs.writeFileSync(filePath, markdownContent, 'utf8');
+}
+
+async function loadNotesFromMarkdown(dir: string): Promise<Note[]> {
+  // ディレクトリ確認
+  if (!fs.existsSync(dir)) {
+    await fsPromises.mkdir(dir, { recursive: true });
+    return [];
+  }
+
+
+  const entries = await fsPromises.readdir(dir);
+  const notesFromFiles: Note[] = [];
+
+  entries.forEach(async (file) => {
+    if (path.extname(file).toLowerCase() !== '.md') {
+      return;
+    }
+
+    const filePath = path.join(dir, file);
+    const content = await fsPromises.readFile(filePath, 'utf8');
+    const title = path.basename(file, '.md');
+
+    notesFromFiles.push({
+      id: randomUUID(),
+      title,
+      content,
+    });
+  });
+
+  return notesFromFiles;
+}
 
 function createMainWindow() {
   mainWindow = new BrowserWindow({
@@ -116,7 +150,11 @@ function deleteNoteWindow(noteId: string) {
 
 app
   .whenReady()
-  .then(() => {
+  .then(async () => {
+    // ファイルからMarkdownリストを生成
+    console.log(`loading... ${dirPath}`);
+    notes = await loadNotesFromMarkdown(dirPath);
+
     createMainWindow();
     ipcMain.handle('open-note-window', (_evt, noteId: string) => {
       createNoteWindow(noteId);
@@ -124,6 +162,7 @@ app
     ipcMain.handle('close-note-window', (_evt, noteId: string) => {
       deleteNoteWindow(noteId);
     });
+
     return console.log('Main Window created.');
   })
   .catch((e) => {
@@ -135,6 +174,7 @@ app.on('window-all-closed', () => {
 });
 
 app.on('activate', () => {
+  // アプリ有効化
   if (BrowserWindow.getAllWindows().length === 0) {
     createMainWindow();
   }
@@ -158,14 +198,14 @@ ipcMain.handle('add-note', (_event, newNote: Omit<Note, 'id'>) => {
   return note;
 });
 
-ipcMain.handle('update-note', (_event, updatedNote: Note) => {
+ipcMain.handle('update-note', async (_event, updatedNote: Note) => {
   // IDが一致するものを上書き
   const idx = notes.findIndex((n) => n.id === updatedNote.id);
   if (idx >= 0) {
     notes[idx] = updatedNote;
+    saveNoteAsMarkdown(updatedNote, './Notes');
     return notes[idx];
   }
-  // saveNoteAsMarkdown(updatedNote, './');
   return null; // 見つからなければ null
 });
 
