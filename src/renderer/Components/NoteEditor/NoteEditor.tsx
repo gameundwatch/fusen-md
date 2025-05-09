@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 
-import { Box, Container, Flex } from '@radix-ui/themes';
+import { Box, Container, Flex, Heading, Text } from '@radix-ui/themes';
 import { useLocation } from 'react-router-dom';
 import queryString from 'query-string';
 
@@ -86,19 +86,15 @@ export function NoteEditor() {
       <Flex direction="column" width="100%" height="100%" justify="between">
         <Box
           width="100%"
-          height="16px"
-          minHeight="16px"
+          height="24px"
+          minHeight="24px"
           className="Top DragAnchor"
           p="1"
-          flexGrow="0"
         >
-          <Flex width="100%" direction="row" align="center" justify="between">
-            <Box flexGrow="1">
-              <Flex direction="row" align="center" justify="start" gap="2" />
-            </Box>
-            <Box flexGrow="0">
-              <Flex direction="row" align="center" justify="end" gap="2" />
-            </Box>
+          <Flex width="100%" align="center" justify="center">
+            <Text className="NoteTitle" size="1">
+              {note.title}
+            </Text>
           </Flex>
         </Box>
         <NoteToolbar closeNote={() => closeNote(note.title)} />
