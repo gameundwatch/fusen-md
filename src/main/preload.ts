@@ -26,8 +26,8 @@ const electronHandler = {
 
 contextBridge.exposeInMainWorld('electron', electronHandler);
 contextBridge.exposeInMainWorld('electronAPI', {
-  openNoteWindow: (noteId: string) =>
-    ipcRenderer.invoke('open-note-window', noteId),
+  openNoteWindow: (title: string) =>
+    ipcRenderer.invoke('open-note-window', title),
 });
 
 contextBridge.exposeInMainWorld('noteAPI', {
@@ -37,35 +37,33 @@ contextBridge.exposeInMainWorld('noteAPI', {
     return notes;
   },
   // 単一取得
-  getNote: async (noteId: string) => {
-    const Note = await ipcRenderer.invoke('get-note', noteId);
+  getNote: async (title: string) => {
+    const Note = await ipcRenderer.invoke('get-note', title);
     return Note;
   },
   // 追加
   addNote: async (title: string, content: string) => {
-    // mainプロセス側で id を付加してくれる想定
-    const newNote = await ipcRenderer.invoke('add-note', { title, content });
-    return newNote;
+    const newNotes = await ipcRenderer.invoke('add-note', { title, content });
+    return newNotes;
   },
   // 更新
-  updateNote: async (id: string, title: string, content: string) => {
-    const updated = await ipcRenderer.invoke('update-note', {
-      id,
+  updateNote: async (title: string, content: string) => {
+    const newNotes = await ipcRenderer.invoke('update-note', {
       title,
       content,
     });
-    return updated;
+    return newNotes;
   },
   // 削除
-  deleteNote: async (id: string) => {
-    const success = await ipcRenderer.invoke('delete-note', id);
-    return success;
+  deleteNote: async (title: string) => {
+    const newNotes = await ipcRenderer.invoke('delete-note', title);
+    return newNotes;
   },
   // 付箋ウィンドウを開く(必要なら)
-  openNoteWindow: (id: string) => {
-    ipcRenderer.invoke('open-note-window', id);
+  openNoteWindow: (title: string) => {
+    ipcRenderer.invoke('open-note-window', title);
   },
-  closeNoteWindow: (id: string) => {
-    ipcRenderer.invoke('close-note-window', id);
+  closeNoteWindow: (title: string) => {
+    ipcRenderer.invoke('close-note-window', title);
   },
 });

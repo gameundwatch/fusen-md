@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 
-import { Box, Container, Flex, IconButton, Separator } from '@radix-ui/themes';
+import { Box, Container, Flex } from '@radix-ui/themes';
 import { useLocation } from 'react-router-dom';
 import queryString from 'query-string';
 
@@ -10,14 +10,14 @@ import './MdViewer.css';
 import { Note } from '../../../common/note';
 import { NoteToolbar } from './NoteToolBar';
 
-const closeNote = async (noteId: string) => {
-  await window.noteAPI.closeNoteWindow(noteId);
+const closeNote = async (title: string) => {
+  await window.noteAPI.closeNoteWindow(title);
 };
 
 export function NoteEditor() {
   const location = useLocation();
   const params = queryString.parse(location.search);
-  const noteId = params.noteId as string | undefined;
+  const title = params.title as string | undefined;
   const [note, setNote] = useState<Note | null>(null);
   const [draft, setDraft] = useState('');
   const [isActive, setIsActive] = useState(true);
@@ -25,10 +25,10 @@ export function NoteEditor() {
   const saveContent = async () => {
     if (note) {
       // noteの更新、保存
-      await window.noteAPI.updateNote(note.id, note.title, draft);
+      await window.noteAPI.updateNote(note.title, draft);
       // noteの再取得
       window.noteAPI
-        .getNote(note.id)
+        .getNote(note.title)
         .then((fetchedNote) => {
           setNote(fetchedNote);
           setDraft(fetchedNote.content);
@@ -41,10 +41,10 @@ export function NoteEditor() {
   };
 
   useEffect(() => {
-    if (!noteId) return;
+    if (!title) return;
 
     window.noteAPI
-      .getNote(noteId)
+      .getNote(title)
       .then((fetchedNote) => {
         setNote(fetchedNote);
         setDraft(fetchedNote.content);
@@ -53,7 +53,7 @@ export function NoteEditor() {
       .catch((error) => {
         console.error('Failed to fetch note:', error);
       });
-  }, [noteId]);
+  }, [title]);
 
   useEffect(() => {
     const handleFocus = () => {
@@ -101,7 +101,7 @@ export function NoteEditor() {
             </Box>
           </Flex>
         </Box>
-        <NoteToolbar closeNote={() => closeNote(note.id)}/>
+        <NoteToolbar closeNote={() => closeNote(note.title)} />
         {isActive ? (
           <Box width="100%" flexGrow="1" className="Body">
             <textarea

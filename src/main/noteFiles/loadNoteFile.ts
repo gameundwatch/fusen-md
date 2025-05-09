@@ -8,7 +8,6 @@ export async function loadNoteFile(dir: string, file: string): Promise<Note> {
   const title = path.parse(file).name;
   const content = await fs.promises.readFile(filePath, 'utf8');
   return {
-    id: title,
     title,
     content,
   };

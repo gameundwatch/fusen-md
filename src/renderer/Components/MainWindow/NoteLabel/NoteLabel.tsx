@@ -1,16 +1,16 @@
 import { FileTextIcon, TrashIcon } from '@radix-ui/react-icons';
 import { Card, Flex, Text, IconButton, Box } from '@radix-ui/themes';
-import { Note } from '../../../atoms/notesAtom';
+import { Note } from '../../../../common/note';
 
 type NoteLabelProps = {
   note: Note;
-  deleteNote: (id: string) => void;
+  deleteNote: (title: string) => void;
 };
 
 export function NoteLabel(props: NoteLabelProps) {
   const { note, deleteNote } = props;
   return (
-    <Card className="FusenCard" variant="surface" key={note.id}>
+    <Card className="FusenCard" variant="surface" key={note.title}>
       <Flex direction="row" align="center" justify="between">
         <Text size="2" weight="bold">
           {note.title}
@@ -24,7 +24,7 @@ export function NoteLabel(props: NoteLabelProps) {
               variant="ghost"
               radius="full"
               onClick={() => {
-                window.noteAPI.openNoteWindow(note.id);
+                window.noteAPI.openNoteWindow(note.title);
               }}
             >
               <FileTextIcon scale="4" />
@@ -34,7 +34,7 @@ export function NoteLabel(props: NoteLabelProps) {
               className="DeleteButton"
               variant="ghost"
               radius="full"
-              onClick={() => deleteNote(note.id)}
+              onClick={() => deleteNote(note.title)}
             >
               <TrashIcon scale="4" />
             </IconButton>

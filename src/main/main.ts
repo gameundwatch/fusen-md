@@ -53,10 +53,10 @@ function createMainWindow() {
   });
 }
 
-function createNoteWindow(noteId: string) {
-  if (noteWindows.has(noteId)) {
+function createNoteWindow(title: string) {
+  if (noteWindows.has(title)) {
     // 既にある場合はフォーカスを当てる
-    noteWindows.get(noteId)?.focus();
+    noteWindows.get(title)?.focus();
     return;
   }
 
@@ -80,10 +80,10 @@ function createNoteWindow(noteId: string) {
     // },
   });
 
-  child.loadURL(`${resolveHtmlPath('index.html')}#/note?noteId=${noteId}`);
+  child.loadURL(`${resolveHtmlPath('index.html')}#/note?title=${title}`);
   child.webContents.openDevTools();
   child.on('closed', () => {
-    noteWindows.delete(noteId);
+    noteWindows.delete(title);
   });
 
   if (process.platform === 'darwin') {
@@ -91,12 +91,12 @@ function createNoteWindow(noteId: string) {
     child.setWindowButtonVisibility(false);
   }
 
-  noteWindows.set(noteId, child);
+  noteWindows.set(title, child);
 }
 
-function deleteNoteWindow(noteId: string) {
-  noteWindows.get(noteId)?.close();
-  noteWindows.delete(noteId);
+function deleteNoteWindow(title: string) {
+  noteWindows.get(title)?.close();
+  noteWindows.delete(title);
 }
 
 app
@@ -107,11 +107,11 @@ app
     notes = await loadNotesFromDir(rootDir);
 
     createMainWindow();
-    ipcMain.handle('open-note-window', (_evt, noteId: string) => {
-      createNoteWindow(noteId);
+    ipcMain.handle('open-note-window', (_evt, title: string) => {
+      createNoteWindow(title);
     });
-    ipcMain.handle('close-note-window', (_evt, noteId: string) => {
-      deleteNoteWindow(noteId);
+    ipcMain.handle('close-note-window', (_evt, title: string) => {
+      deleteNoteWindow(title);
     });
 
     return console.log('Main Window created.');
@@ -136,19 +136,17 @@ ipcMain.handle('get-notes', () => {
   return notes;
 });
 
-ipcMain.handle('get-note', async (_event, noteId: string) => {
-  return notes.find((n) => n.id === noteId);
+ipcMain.handle('get-note', async (_event, title: string) => {
+  return notes.find((n) => n.title === title);
 });
 
-ipcMain.handle('add-note', async (_event, newNote: Omit<Note, 'id'>) => {
+ipcMain.handle('add-note', async (_event, newNote: Note) => {
   // 受け取った newNote に id を付加して追加
-  const id = newNote.title;
-  const note: Note = { id, ...newNote };
-  await saveNoteFile(note, rootDir);
+  await saveNoteFile(newNote, rootDir);
   // ファイルの再スキャン
   notes = await loadNotesFromDir(rootDir);
   console.log(notes);
-  return note;
+  return notes;
 });
 
 ipcMain.handle('update-note', async (_event, updatedNote: Note) => {
@@ -156,26 +154,19 @@ ipcMain.handle('update-note', async (_event, updatedNote: Note) => {
   try {
     await saveNoteFile(updatedNote, './Notes');
     notes = await loadNotesFromDir(rootDir);
-    return true;
-    // const idx = notes.findIndex((n) => n.id === updatedNote.id);
-    // if (idx >= 0) {
-
-    //   // notes[idx] = updatedNote;
-    //   return notes[idx];
-    // }
+    return notes;
   } catch (err) {
     console.error(err);
     return false;
   }
 });
 
-ipcMain.handle('delete-note', async (_event, noteId: string) => {
-  const beforeLength = notes.length;
-  const target = notes.find((n) => n.id === noteId);
+ipcMain.handle('delete-note', async (_event, title: string) => {
+  const target = notes.find((n) => n.title === title);
   if (target) {
     // ファイルの消去
     deleteNoteFile(target, './Notes');
-    notes = notes.filter((n) => n.id !== noteId);
+    notes = notes.filter((n) => n.title !== title);
   }
-  return notes.length < beforeLength; // 削除成功したかどうか
+  return notes; // 削除成功したかどうか
 });
