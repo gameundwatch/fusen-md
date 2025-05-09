@@ -38,7 +38,7 @@ contextBridge.exposeInMainWorld('noteAPI', {
   },
   // 単一取得
   getNote: async (noteId: string) => {
-    const Note = await ipcRenderer.invoke('get-note-by-id', noteId);
+    const Note = await ipcRenderer.invoke('get-note', noteId);
     return Note;
   },
   // 追加
