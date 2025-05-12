@@ -10,7 +10,7 @@ import App from './App';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <Theme accentColor="indigo" appearance="dark" radius="small">
+    <Theme accentColor="indigo" appearance="light" radius="small">
       <HashRouter>
         <App />
       </HashRouter>

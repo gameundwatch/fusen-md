@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import remarkBreaks from 'remark-breaks';
@@ -10,6 +10,7 @@ import queryString from 'query-string';
 import './index.css';
 import './MdViewer.css';
 import './MdEditor.css';
+import './style.css';
 
 import { Note } from '../../../common/note';
 import { NoteToolbar } from './NoteToolBar';
@@ -22,6 +23,8 @@ export function NoteEditor() {
   const location = useLocation();
   const params = queryString.parse(location.search);
   const title = params.title as string | undefined;
+  const previewRef = useRef<HTMLDivElement>(null);
+
   const [note, setNote] = useState<Note | null>(null);
   const [draft, setDraft] = useState('');
   const [isActive, setIsActive] = useState(true);
@@ -113,7 +116,7 @@ export function NoteEditor() {
           </Box>
         ) : (
           <Box width="100%" flexGrow="1" className="Body">
-            <Box className="MdViewer Scrollable">
+            <Box className="MdViewer Scrollable markdown-body">
               <ReactMarkdown remarkPlugins={[remarkGfm, remarkBreaks]}>
                 {
                   // Windows用修正
