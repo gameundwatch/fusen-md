@@ -1,12 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import remarkBreaks from 'remark-breaks';
 
-import { Box, Container, Flex, Heading, Text } from '@radix-ui/themes';
+import { Box, Container, Flex, Text } from '@radix-ui/themes';
 import { useLocation } from 'react-router-dom';
 import queryString from 'query-string';
 
 import './index.css';
 import './MdViewer.css';
+import './MdEditor.css';
+
 import { Note } from '../../../common/note';
 import { NoteToolbar } from './NoteToolBar';
 
@@ -102,15 +106,20 @@ export function NoteEditor() {
           <Box width="100%" flexGrow="1" className="Body">
             <textarea
               value={draft}
-              className="MdEditor"
+              className="MdEditor Scrollable"
               onChange={(e) => setDraft(e.target.value)}
               onBlur={saveContent} // 焦点が外れたら保存
             />
           </Box>
         ) : (
           <Box width="100%" flexGrow="1" className="Body">
-            <Box className="MdViewer">
-              <ReactMarkdown>{note.content}</ReactMarkdown>
+            <Box className="MdViewer Scrollable">
+              <ReactMarkdown remarkPlugins={[remarkGfm, remarkBreaks]}>
+                {
+                  // Windows用修正
+                  note.content.replace(/\r\n/g, '\n')
+                }
+              </ReactMarkdown>
             </Box>
           </Box>
         )}

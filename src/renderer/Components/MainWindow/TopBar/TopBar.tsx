@@ -7,7 +7,7 @@ type TopBarProps = {};
 
 export function TopBar(props: TopBarProps) {
   return (
-    <Box className="Top DragAnchor" height="32px" minHeight="32px">
+    <Box className="Top DragAnchor">
       <Flex direction="row" align="center" justify="between">
         <Box className="MenuContents">
           <Flex ml="2" direction="row" align="center" gap="4">

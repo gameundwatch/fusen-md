@@ -1,23 +1,14 @@
-.MdEditor {
-  height: 100vh;
-}
 
-textarea.MdEditor {
-  width: 100%;
-  border: solid 0px transparent;
-  outline: 0px;
-}
+/* .Active .Note.Top {
 
-.Active .Note.Top {
+} */
 
-}
+/* .Inactive .Note.Top {
 
-.Inactive .Note.Top {
-
-}
+} */
 
 .Active .Edit {
-  height: 24px;
+  min-height: 24px;
   padding: 4px;
   background-color: var(--gray-4);
   border-bottom: solid 1px var(--gray-5);
@@ -47,9 +38,9 @@ textarea.MdEditor {
 }
 
 .Active .Body {
-  padding: 4px;
+  padding: 0px;
 }
 
 .Inactive .Body {
-  padding: 4px;
+  padding: 0px;
 }

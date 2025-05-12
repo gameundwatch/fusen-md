@@ -61,7 +61,7 @@ export function MainWindow(): JSX.Element {
     <Container>
       <Flex className="MainWindow" direction="column" justify="between">
         <TopBar />
-        <Box className="MainContents" p="0.5rem">
+        <Box className="MainContents Scrollable" p="0.5rem">
           <Flex direction="column" justify="start" gap="2">
             {notes.map((note) => (
               <NoteLabel key={note.title} note={note} deleteNote={deleteNote} />
