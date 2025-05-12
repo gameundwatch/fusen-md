@@ -22,9 +22,14 @@
   --md-bg: transparent;
   --md-code-bg: #f6f8fa;
   --md-border: #d0d7de;
+
+  /* ───────── Fonts ───────── */
+  --md-font-family-main: "Inter";
+  --md-font-family-code: "Consolas"
 }
 
 /* ---------- Base Container ---------- */
+
 .markdown-body {
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
   font-size: var(--md-font-base);
@@ -136,3 +141,15 @@
 .markdown-body img {
   max-width: 100%;
 }
+
+
+/* ---------- Overlaps ---------- */
+
+.markdown-body {
+  font-family: var(--md-font-family-main);
+}
+
+.markdown-body code {
+  font-family: var(--md-font-family-code);
+}
+
