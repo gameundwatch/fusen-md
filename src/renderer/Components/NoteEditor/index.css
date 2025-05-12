@@ -7,6 +7,15 @@
 
 } */
 
+.Note .Top {
+  background-color: var(--accent-4);
+  flex: 0 0 32px;
+}
+
+.Note .Body {
+  background-color: var(--gray-3);
+}
+
 .Active .Edit {
   min-height: 24px;
   padding: 4px;
@@ -35,6 +44,10 @@
 
 .Inactive .NoteTitle {
   opacity: 0
+}
+
+.Body {
+  min-height: 0;
 }
 
 .Active .Body {
