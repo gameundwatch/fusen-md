@@ -1,0 +1,155 @@
+/* -----------------------------------------------------------------
+   ChatGPT‑like Markdown Styling (fusen‑md)
+   -----------------------------------------------------------------
+   Base text = 16 px (1rem)  ─ overridden via --md-font-base for zoom.
+   Scope these rules by wrapping content in <div class="markdown-body">…
+----------------------------------------------------------------- */
+
+:root {
+  /* ───────── Typography scale (modifiable) ───────── */
+  --md-font-base: 1rem;   /* 16 px  | body, p, li, td  */
+  --md-fs-h1:   2.00rem;  /* 32 px  */
+  --md-fs-h2:   1.75rem;  /* 28 px  */
+  --md-fs-h3:   1.50rem;  /* 24 px  */
+  --md-fs-h4:   1.25rem;  /* 20 px  */
+  --md-fs-h5:   1.125rem; /* 18 px  */
+  --md-fs-h6:   1.00rem;  /* 16 px  */
+  --md-fs-code: 0.9375rem;/* 15 px  | inline code & <pre> */
+  --md-fs-small:0.875rem; /* 14 px  | captions etc.     */
+
+  /* ───────── Colors / borders ───────── */
+  --md-fg: #24292f;
+  --md-bg: transparent;
+  --md-code-bg: #f6f8fa;
+  --md-border: #d0d7de;
+
+  /* ───────── Fonts ───────── */
+  --md-font-family-main: "Inter";
+  --md-font-family-code: "Consolas"
+}
+
+/* ---------- Base Container ---------- */
+
+.markdown-body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+  font-size: var(--md-font-base);
+  color: var(--md-fg);
+  background: var(--md-bg);
+  line-height: 1.6;
+  word-wrap: break-word;
+}
+
+/* ---------- Headings ---------- */
+.markdown-body h1 { font-size: var(--md-fs-h1); }
+.markdown-body h2 { font-size: var(--md-fs-h2); }
+.markdown-body h3 { font-size: var(--md-fs-h3); }
+.markdown-body h4 { font-size: var(--md-fs-h4); }
+.markdown-body h5 { font-size: var(--md-fs-h5); }
+.markdown-body h6 { font-size: var(--md-fs-h6); }
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  font-weight: 600;
+  line-height: 1.25;
+  margin: 0.8em 0 0.4em;
+}
+
+/* ---------- Paragraph ---------- */
+.markdown-body p {
+  margin: 0.8em 0;
+}
+
+/* ---------- Lists ---------- */
+.markdown-body ul,
+.markdown-body ol {
+  margin: 0.8em 0 0.8em 1.5em;
+  padding-left: 0.5em;
+}
+
+.markdown-body ul { list-style: disc outside; }
+.markdown-body ul ul { list-style: circle outside; }
+.markdown-body ul ul ul { list-style: square outside; }
+
+.markdown-body ol { list-style: decimal outside; }
+.markdown-body ol ol { list-style: lower-alpha outside; }
+.markdown-body ol ol ol { list-style: lower-roman outside; }
+
+.markdown-body li { margin: 0.4em 0; }
+
+/* ---------- Code ---------- */
+.markdown-body code {
+  font-family: ui-monospace, Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: var(--md-fs-code);
+  background: var(--md-code-bg);
+  padding: 0.15em 0.35em;
+  border-radius: 4px;
+}
+
+.markdown-body pre {
+  background: var(--md-code-bg);
+  font-size: var(--md-fs-code);
+  padding: 1em;
+  overflow: auto;
+  border-radius: 6px;
+}
+
+.markdown-body pre code {
+  padding: 0;
+  background: none;
+}
+
+/* ---------- Blockquote ---------- */
+.markdown-body blockquote {
+  border-left: 4px solid var(--md-border);
+  margin: 0.8em 0;
+  padding: 0 1em;
+  color: #57606a;
+}
+
+/* ---------- Horizontal Rule ---------- */
+.markdown-body hr {
+  border: 0;
+  height: 1px;
+  background: var(--md-border);
+  margin: 2em 0;
+}
+
+/* ---------- Table ---------- */
+.markdown-body table {
+  border-collapse: collapse;
+  margin: 1.6em 0;
+  width: 100%;
+  font-size: var(--md-font-base); /* same as body text */
+}
+
+.markdown-body th,
+.markdown-body td {
+  border: 1px solid var(--md-border);
+  padding: 0.6em 0.8em;
+}
+
+.markdown-body thead th {
+  background: #f6f8fa;
+  font-weight: 600;
+}
+
+/* ---------- Images ---------- */
+.markdown-body img {
+  max-width: 100%;
+}
+
+
+/* ---------- Overlaps ---------- */
+
+.markdown-body {
+  font-family: var(--md-font-family-main);
+}
+
+.markdown-body code {
+  font-family: var(--md-font-family-code);
+}
+
