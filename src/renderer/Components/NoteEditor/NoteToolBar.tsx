@@ -4,7 +4,6 @@ import {
   ChevronLeftIcon,
   ChevronRightIcon,
   CodeIcon,
-  Cross1Icon,
   DotsHorizontalIcon,
   FontBoldIcon,
   FontItalicIcon,
@@ -14,12 +13,9 @@ import {
   StrikethroughIcon,
 } from '@radix-ui/react-icons';
 
-type NoteToolbarProps = {
-  closeNote: () => void;
-};
+type NoteToolbarProps = {};
 
 export function NoteToolbar(props: NoteToolbarProps) {
-  const { closeNote } = props;
   return (
     <Box width="100%" className="Edit" px="2" py="1" flexGrow="0">
       <Flex width="100%" direction="row" align="center" justify="between">
@@ -62,16 +58,6 @@ export function NoteToolbar(props: NoteToolbarProps) {
             </IconButton>
           </Flex>
         </Box>
-        <IconButton
-          type="button"
-          variant="ghost"
-          radius="none"
-          color="red"
-          size="1"
-          onClick={closeNote}
-        >
-          <Cross1Icon />
-        </IconButton>
       </Flex>
     </Box>
   );

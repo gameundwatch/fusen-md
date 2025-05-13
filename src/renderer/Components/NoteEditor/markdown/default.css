@@ -23,9 +23,6 @@
   --md-code-bg: #f6f8fa;
   --md-border: #d0d7de;
 
-  /* ───────── Fonts ───────── */
-  --md-font-family-main: "Inter";
-  --md-font-family-code: "Consolas"
 }
 
 /* ---------- Base Container ---------- */
@@ -142,14 +139,4 @@
   max-width: 100%;
 }
 
-
-/* ---------- Overlaps ---------- */
-
-.markdown-body {
-  font-family: var(--md-font-family-main);
-}
-
-.markdown-body code {
-  font-family: var(--md-font-family-code);
-}
 

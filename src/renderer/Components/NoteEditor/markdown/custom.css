@@ -1,0 +1,15 @@
+:root{
+  --md-font-size-main: 12px;
+/* ---------- Fonts ---------- */
+  --md-font-family-main: "Inter", "源暎エムゴv2";
+  --md-font-family-code: "Hack";
+}
+
+.markdown-body {
+  font-family: var(--md-font-family-main);
+}
+
+.markdown-body code {
+  font-family: var(--md-font-family-code);
+}
+

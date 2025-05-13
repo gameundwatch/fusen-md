@@ -1,16 +1,18 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
+import queryString from 'query-string';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import remarkBreaks from 'remark-breaks';
 
-import { Box, Container, Flex, Text } from '@radix-ui/themes';
-import { useLocation } from 'react-router-dom';
-import queryString from 'query-string';
+import { Box, Container, Flex, IconButton, Text } from '@radix-ui/themes';
+import { Cross1Icon, FileIcon, Pencil1Icon } from '@radix-ui/react-icons';
 
 import './index.css';
 import './MdViewer.css';
 import './MdEditor.css';
-import './style.css';
+import './markdown/default.css';
+import './markdown/custom.css';
 
 import { Note } from '../../../common/note';
 import { NoteToolbar } from './NoteToolBar';
@@ -26,7 +28,7 @@ export function NoteEditor() {
 
   const [note, setNote] = useState<Note | null>(null);
   const [draft, setDraft] = useState('');
-  const [isActive, setIsActive] = useState(true);
+  const [isEdit, setIsEdit] = useState(false);
 
   const saveContent = async () => {
     if (note) {
@@ -62,19 +64,12 @@ export function NoteEditor() {
 
   useEffect(() => {
     // ウィンドウ関連のイベントハンドラ
-    const handleFocus = () => {
-      setIsActive(true);
-    };
     const handleBlur = () => {
-      setIsActive((prev) => (prev ? false : prev));
+      setIsEdit((prev) => (prev ? false : prev));
     };
-
-    window.addEventListener('focus', handleFocus);
     window.addEventListener('blur', handleBlur);
-
     // アンマウント時に解除
     return () => {
-      window.removeEventListener('focus', handleFocus);
       window.removeEventListener('blur', handleBlur);
     };
   }, []);
@@ -87,24 +82,44 @@ export function NoteEditor() {
     <Container
       width="100%"
       height="100vh"
-      className={isActive ? 'Note Active' : 'Note Inactive'}
+      className={isEdit ? 'Note Active' : 'Note Inactive'}
     >
       <Flex direction="column" width="100%" height="100%" justify="between">
         <Box
           width="100%"
           height="24px"
           minHeight="24px"
-          className="Top DragAnchor"
+          className="Top"
           p="1"
+          onMouseDown={() => setIsEdit(true)}
         >
-          <Flex width="100%" align="center" justify="center">
-            <Text className="NoteTitle" size="1">
+          <Flex width="100%" align="center" justify="between">
+            {/* 上部左側（書き込みトグル、ファイルエクスポートなど） */}
+            <IconButton className="NoteTopUi" variant="ghost" size="1">
+              {isEdit ? (
+                <FileIcon onClick={() => setIsEdit(!isEdit)} />
+              ) : (
+                <Pencil1Icon onClick={() => setIsEdit(!isEdit)} />
+              )}
+            </IconButton>
+            {/* ラベル */}
+            <Text align="center" className="NoteTopLabel DragAnchor" size="1">
               {note.title}
             </Text>
+            <IconButton
+              type="button"
+              variant="ghost"
+              radius="none"
+              color="red"
+              size="1"
+              onClick={() => closeNote(note.title)}
+            >
+              <Cross1Icon />
+            </IconButton>
           </Flex>
         </Box>
-        <NoteToolbar closeNote={() => closeNote(note.title)} />
-        {isActive ? (
+        <NoteToolbar />
+        {isEdit ? (
           <Box width="100%" flexGrow="1" className="Body">
             <textarea
               value={draft}
@@ -118,7 +133,7 @@ export function NoteEditor() {
             <Box className="MdViewer Scrollable markdown-body">
               <ReactMarkdown remarkPlugins={[remarkGfm, remarkBreaks]}>
                 {
-                  // Windows用修正
+                  // Windows用 CRLF -> CR 修正
                   note.content.replace(/\r\n/g, '\n')
                 }
               </ReactMarkdown>
