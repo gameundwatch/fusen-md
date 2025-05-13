@@ -1,0 +1,33 @@
+
+.MdEditor {
+  max-height: 100%;
+  height: 100%;
+}
+
+textarea.MdEditor {
+  width: 100%;
+  padding: 4px 8px;
+  border: solid 0px transparent;
+  outline: 0px;
+  resize: none;
+  font-family:
+    /* Windows */
+    "Hack",
+    Consolas,
+    "Courier New",
+
+    /* macOS */
+    Menlo,
+    Monaco,
+
+    /* Linux */
+    "DejaVu Sans Mono",
+    "Liberation Mono",
+
+    /* Cross‑platform developer fonts */
+    "Source Code Pro",
+    "Lucida Console",
+
+    /* Generic fallback */
+    monospace;
+  }
