@@ -10,7 +10,7 @@ export async function deleteNoteFile(
   const filePath = path.join(dir, fileName);
   console.log(`removed: ${filePath}`);
   // force=true: 無い場合もエラーにしない
-  fs.promises.rm(filePath, { force: true });
+  await fs.promises.rm(filePath, { force: true });
   return true;
 }
 

@@ -150,9 +150,9 @@ ipcMain.handle('add-note', async (_event, newNote: Note) => {
 });
 
 ipcMain.handle('update-note', async (_event, updatedNote: Note) => {
-  // IDが一致するものを上書き
+  // タイトルが一致するものを上書き
   try {
-    await saveNoteFile(updatedNote, './Notes');
+    await saveNoteFile(updatedNote, rootDir);
     notes = await loadNotesFromDir(rootDir);
     return notes;
   } catch (err) {
@@ -161,12 +161,32 @@ ipcMain.handle('update-note', async (_event, updatedNote: Note) => {
   }
 });
 
-ipcMain.handle('delete-note', async (_event, title: string) => {
-  const target = notes.find((n) => n.title === title);
-  if (target) {
-    // ファイルの消去
-    deleteNoteFile(target, './Notes');
-    notes = notes.filter((n) => n.title !== title);
+ipcMain.handle('rename-note', async (_event, target: Note, newName: string) => {
+  // タイトルを変更
+  try {
+    const t = notes.find((n) => n.title === target.title);
+    if (t) {
+      // ファイルの消去
+      // deleteNoteFile(target, './Notes');
+      // notes = notes.filter((n) => n.title !== title);
+    }
+    return notes; // 削除成功したかどうか
+  } catch (err) {
+    console.error(err);
+    return false;
   }
-  return notes; // 削除成功したかどうか
+});
+
+ipcMain.handle('delete-note', async (_event, title: string) => {
+  try {
+    const target = notes.find((n) => n.title === title);
+    if (target) {
+      await deleteNoteFile(target, rootDir);
+      notes = await loadNotesFromDir(rootDir);
+    }
+    return notes; // 削除成功したかどうか
+  } catch (err) {
+    console.error(err);
+    return false;
+  }
 });
