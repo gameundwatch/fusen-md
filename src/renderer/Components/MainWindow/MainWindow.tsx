@@ -57,6 +57,13 @@ export function MainWindow(): JSX.Element {
     setNotes(newNotes);
   };
 
+  // リネーム
+  const renameNote = async (targetName: string, newName: string) => {
+    // await window.noteAPI.closeNoteWindow(title);
+    const newNotes = await window.noteAPI.renameNote(targetName, newName);
+    setNotes(newNotes);
+  };
+
   return (
     <Container>
       <Flex className="MainWindow" direction="column" justify="between">
@@ -64,7 +71,12 @@ export function MainWindow(): JSX.Element {
         <Box className="MainContents Scrollable" p="0.5rem">
           <Flex direction="column" justify="start" gap="2">
             {notes.map((note) => (
-              <NoteLabel key={note.title} note={note} deleteNote={deleteNote} />
+              <NoteLabel
+                key={note.title}
+                note={note}
+                renameNote={renameNote}
+                deleteNote={deleteNote}
+              />
             ))}
             <Button variant="outline" onClick={addNote}>
               <PlusIcon /> New

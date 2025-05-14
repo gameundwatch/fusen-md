@@ -1,20 +1,47 @@
+import { useState } from 'react';
 import { FileTextIcon, TrashIcon } from '@radix-ui/react-icons';
-import { Card, Flex, Text, IconButton, Box } from '@radix-ui/themes';
+import { Card, Flex, Text, IconButton, Box, TextField } from '@radix-ui/themes';
 import { Note } from '../../../../common/note';
 
 type NoteLabelProps = {
   note: Note;
+  renameNote: (title: string, newTitle: string) => void;
   deleteNote: (title: string) => void;
 };
 
 export function NoteLabel(props: NoteLabelProps) {
-  const { note, deleteNote } = props;
+  const { note, renameNote, deleteNote } = props;
+  const [edit, setEdit] = useState<boolean>(false);
+
   return (
     <Card className="FusenCard" variant="surface" key={note.title}>
       <Flex direction="row" align="center" justify="between">
-        <Text size="2" weight="bold">
-          {note.title}
-        </Text>
+        <Box>
+          {!edit ? (
+            <Text
+              size="2"
+              weight="bold"
+              onClick={() => {
+                setEdit(true);
+              }}
+            >
+              {note.title}
+            </Text>
+          ) : (
+            <TextField.Root
+              className="TextField"
+              size="1"
+              variant="soft"
+              defaultValue={note.title}
+              onBlur={(e) => {
+                if (e.target.value !== '') {
+                  renameNote(note.title, e.target.value);
+                }
+                setEdit(false);
+              }}
+            />
+          )}
+        </Box>
         <Box>
           <Flex direction="row" align="center" gap="4">
             <Text size="1" color="gray">

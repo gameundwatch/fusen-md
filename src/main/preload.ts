@@ -41,12 +41,10 @@ contextBridge.exposeInMainWorld('noteAPI', {
     const Note = await ipcRenderer.invoke('get-note', title);
     return Note;
   },
-  // 追加
   addNote: async (title: string, content: string) => {
     const newNotes = await ipcRenderer.invoke('add-note', { title, content });
     return newNotes;
   },
-  // 更新
   updateNote: async (title: string, content: string) => {
     const newNotes = await ipcRenderer.invoke('update-note', {
       title,
@@ -54,7 +52,10 @@ contextBridge.exposeInMainWorld('noteAPI', {
     });
     return newNotes;
   },
-  // 削除
+  renameNote: async (title: string, newTitle: string) => {
+    const newNotes = await ipcRenderer.invoke('rename-note', title, newTitle);
+    return newNotes;
+  },
   deleteNote: async (title: string) => {
     const newNotes = await ipcRenderer.invoke('delete-note', title);
     return newNotes;

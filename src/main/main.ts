@@ -9,6 +9,7 @@ import { Note } from '../common/note';
 import { loadNotesFromDir } from './noteFiles/loadNoteFile';
 import saveNoteFile from './noteFiles/saveNoteFile';
 import deleteNoteFile from './noteFiles/deleteNoteFile';
+import renameNoteFile from './noteFiles/renameNoteFile';
 
 let notes: Note[] = [
   // { id: '1', title: 'Hello Fusen.md', content: '# Hello Fusen MD!' },
@@ -161,21 +162,23 @@ ipcMain.handle('update-note', async (_event, updatedNote: Note) => {
   }
 });
 
-ipcMain.handle('rename-note', async (_event, target: Note, newName: string) => {
-  // タイトルを変更
-  try {
-    const t = notes.find((n) => n.title === target.title);
-    if (t) {
-      // ファイルの消去
-      // deleteNoteFile(target, './Notes');
-      // notes = notes.filter((n) => n.title !== title);
+ipcMain.handle(
+  'rename-note',
+  async (_event, title: string, newTitle: string) => {
+    // タイトルを変更
+    try {
+      const target = notes.find((n) => n.title === title);
+      if (target) {
+        await renameNoteFile(target, rootDir, newTitle);
+        notes = await loadNotesFromDir(rootDir);
+      }
+      return notes; // 削除成功したかどうか
+    } catch (err) {
+      console.error(err);
+      return false;
     }
-    return notes; // 削除成功したかどうか
-  } catch (err) {
-    console.error(err);
-    return false;
-  }
-});
+  },
+);
 
 ipcMain.handle('delete-note', async (_event, title: string) => {
   try {
