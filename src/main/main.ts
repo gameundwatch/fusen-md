@@ -2,7 +2,7 @@
 
 import { app, BrowserWindow, ipcMain } from 'electron';
 import path from 'path';
-import Store from 'electron-store';
+import Store = require('electron-store');
 
 import { resolveHtmlPath } from './util';
 import { Note } from '../common/note';
@@ -12,15 +12,21 @@ import saveNoteFile from './noteFiles/saveNoteFile';
 import deleteNoteFile from './noteFiles/deleteNoteFile';
 import renameNoteFile from './noteFiles/renameNoteFile';
 
-let notes: Note[] = [];
+type StoreType = {
+  windowBounds: { width: number; height: number };
+  theme: 'light' | 'dark';
+};
 
 // 設定
-const store = new Store({
+const store = new Store<StoreType>({
   defaults: {
     windowBounds: { width: 800, height: 600 },
     theme: 'light',
   },
 });
+
+let notes: Note[] = [];
+
 const rootDir = path.join(app.getPath('userData'), 'Notes');
 
 // メインウィンドウやサブウィンドウを作るための変数
@@ -110,6 +116,9 @@ function deleteNoteWindow(title: string) {
 app
   .whenReady()
   .then(async () => {
+    // config.json読み込み
+    const { width, height } = store.get('windowBounds');
+
     // ファイルからMarkdownリストを生成
     console.log(`loading... ${rootDir}`);
     notes = await loadNotesFromDir(rootDir);
@@ -137,6 +146,11 @@ app.on('activate', () => {
   if (BrowserWindow.getAllWindows().length === 0) {
     createMainWindow();
   }
+});
+
+app.on('before-quit', () => {
+  store.set('windowBounds', { width: 1024, height: 768 });
+  store.set('theme', 'dark');
 });
 
 ipcMain.handle('get-notes', () => {
