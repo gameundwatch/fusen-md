@@ -68,3 +68,8 @@ contextBridge.exposeInMainWorld('noteAPI', {
     ipcRenderer.invoke('close-note-window', title);
   },
 });
+
+contextBridge.exposeInMainWorld('settingsAPI', {
+  get: (key) => ipcRenderer.invoke('settings-get', key),
+  set: (key, value) => ipcRenderer.invoke('settings-set', key, value),
+});

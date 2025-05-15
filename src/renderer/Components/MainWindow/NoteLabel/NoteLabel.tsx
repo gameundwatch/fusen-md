@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { FileTextIcon, TrashIcon } from '@radix-ui/react-icons';
-import { Card, Flex, Text, IconButton, Box, TextField } from '@radix-ui/themes';
+import { Card, Flex, Text, Box, TextField } from '@radix-ui/themes';
 import { Note } from '../../../../common/note';
+import { NoteOptionMenu } from './NoteOptionMenu';
 
 type NoteLabelProps = {
   note: Note;
@@ -15,9 +15,9 @@ export function NoteLabel(props: NoteLabelProps) {
 
   return (
     <Card className="FusenCard" variant="surface" key={note.title}>
-      <Flex direction="row" align="center" justify="between">
-        <Box>
-          {!edit ? (
+      {!edit ? (
+        <Flex direction="row" align="center" justify="between">
+          <Box>
             <Text
               size="2"
               weight="bold"
@@ -27,7 +27,12 @@ export function NoteLabel(props: NoteLabelProps) {
             >
               {note.title}
             </Text>
-          ) : (
+          </Box>
+          <NoteOptionMenu note={note} edit={edit} deleteNote={deleteNote} />
+        </Flex>
+      ) : (
+        <Flex direction="row" align="center" justify="between">
+          <Box>
             <TextField.Root
               className="TextField"
               size="1"
@@ -40,34 +45,10 @@ export function NoteLabel(props: NoteLabelProps) {
                 setEdit(false);
               }}
             />
-          )}
-        </Box>
-        <Box>
-          <Flex direction="row" align="center" gap="4">
-            <Text size="1" color="gray">
-              {/* {note.date} */ 'YYYY/MM/DD'}
-            </Text>
-            <IconButton
-              variant="ghost"
-              radius="full"
-              onClick={() => {
-                window.noteAPI.openNoteWindow(note.title);
-              }}
-            >
-              <FileTextIcon scale="4" />
-            </IconButton>
-            <IconButton
-              color="red"
-              className="DeleteButton"
-              variant="ghost"
-              radius="full"
-              onClick={() => deleteNote(note.title)}
-            >
-              <TrashIcon scale="4" />
-            </IconButton>
-          </Flex>
-        </Box>
-      </Flex>
+          </Box>
+          <NoteOptionMenu note={note} edit={edit} deleteNote={deleteNote} />
+        </Flex>
+      )}
     </Card>
   );
 }

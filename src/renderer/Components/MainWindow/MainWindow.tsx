@@ -86,9 +86,7 @@ export function MainWindow(): JSX.Element {
         <Box className="Foot" py="1" px="2" flexGrow="0">
           <Flex direction="row" align="center" justify="between">
             <Box flexGrow="1">
-              <Flex direction="row" align="center" justify="start" gap="4">
-                <Text size="1">Logging...</Text>
-              </Flex>
+              <Text size="1">Logging...</Text>
             </Box>
             <Box flexGrow="1">
               <Flex direction="row" align="center" justify="end">

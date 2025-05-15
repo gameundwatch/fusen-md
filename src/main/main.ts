@@ -2,6 +2,7 @@
 
 import { app, BrowserWindow, ipcMain } from 'electron';
 import path from 'path';
+import Store from 'electron-store';
 
 import { resolveHtmlPath } from './util';
 import { Note } from '../common/note';
@@ -11,11 +12,16 @@ import saveNoteFile from './noteFiles/saveNoteFile';
 import deleteNoteFile from './noteFiles/deleteNoteFile';
 import renameNoteFile from './noteFiles/renameNoteFile';
 
-let notes: Note[] = [
-  // { id: '1', title: 'Hello Fusen.md', content: '# Hello Fusen MD!' },
-];
+let notes: Note[] = [];
 
-const rootDir = path.join('./', 'Notes');
+// 設定
+const store = new Store({
+  defaults: {
+    windowBounds: { width: 800, height: 600 },
+    theme: 'light',
+  },
+});
+const rootDir = path.join(app.getPath('userData'), 'Notes');
 
 // メインウィンドウやサブウィンドウを作るための変数
 let mainWindow: BrowserWindow | null = null;
@@ -37,7 +43,7 @@ function createMainWindow() {
           titleBarOverlay: {
             height: 32,
             color: '#fff0',
-            symbolColor: '#fffa',
+            // symbolColor: '#fffa',
           },
         }
       : {}),
@@ -65,6 +71,7 @@ function createNoteWindow(title: string) {
     width: 300,
     height: 200,
     transparent: true,
+    frame: false,
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,
@@ -193,3 +200,6 @@ ipcMain.handle('delete-note', async (_event, title: string) => {
     return false;
   }
 });
+
+ipcMain.handle('settings-get', (_, key) => store.get(key));
+ipcMain.handle('settings-set', (_, key, val) => store.set(key, val));

@@ -1,3 +1,3 @@
 export type config = {
-  rootdir: string[];
+  rootdir: string;
 };
